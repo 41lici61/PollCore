@@ -1,3 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App general -->
     <string name="app_name">PollCore</string>
+
+    <!-- Login Activity -->
+    <string name="login_title">PollCore</string>
+    <string name="login_subtitle">Encuestas con estilo</string>
+    <string name="login_email_hint">Correo electrónico</string>
+    <string name="login_password_hint">Contraseña</string>
+    <string name="login_button">Iniciar Sesión</string>
+    <string name="login_no_account">¿No tienes cuenta? </string>
+    <string name="login_register_link">Regístrate</string>
+    <string name="login_success">Bienvenido</string>
+    <string name="login_error">Email o contraseña incorrectos</string>
+    <string name="login_loading">Iniciando sesión...</string>
+
+    <!-- Register Activity -->
+    <string name="register_title">Crear Cuenta</string>
+    <string name="register_username_hint">Nombre de usuario</string>
+    <string name="register_email_hint">Correo electrónico</string>
+    <string name="register_password_hint">Contraseña</string>
+    <string name="register_confirm_password_hint">Confirmar contraseña</string>
+    <string name="register_private_account">Cuenta privada</string>
+    <string name="register_button">Registrarse</string>
+    <string name="register_have_account">¿Ya tienes cuenta? </string>
+    <string name="register_login_link">Inicia Sesión</string>
+    <string name="register_success">¡Registro exitoso! Por favor inicia sesión</string>
+    <string name="register_error">Error al registrar. El email puede estar duplicado</string>
+    <string name="register_loading">Registrando...</string>
+
+    <!-- Validation errors -->
+    <string name="error_email_required">El correo electrónico es requerido</string>
+    <string name="error_email_invalid">Correo electrónico inválido</string>
+    <string name="error_password_required">La contraseña es requerida</string>
+    <string name="error_password_short">Contraseña demasiado corta (mínimo 6 caracteres)</string>
+    <string name="error_username_required">El nombre de usuario es requerido</string>
+    <string name="error_username_short">El nombre de usuario debe tener al menos 3 caracteres</string>
+    <string name="error_password_mismatch">Las contraseñas no coinciden</string>
+    <string name="error_confirm_password_required">Por favor confirma tu contraseña</string>
+
+    <!-- Poll Feed -->
+    <string name="feed_title">Lista de Encuestas</string>
+    <string name="feed_empty">No hay encuestas disponibles</string>
+    <string name="poll_votes">votos</string>
+    <string name="poll_anonymous">Encuesta anónima</string>
+    <string name="poll_public">Encuesta pública</string>
+    <string name="poll_created_by">Creada por</string>
+    <string name="poll_created_at">Creada el</string>
+
+    <!-- Poll Detail -->
+    <string name="poll_detail_title">Detalles de la Encuesta</string>
+    <string name="poll_question">Pregunta</string>
+    <string name="poll_description">Descripción</string>
+    <string name="poll_options">Opciones</string>
+    <string name="poll_vote_button">Votar</string>
+    <string name="poll_already_voted">Ya has votado en esta encuesta</string>
+    <string name="poll_vote_success">¡Voto registrado exitosamente!</string>
+    <string name="poll_vote_error">Error al registrar el voto</string>
+    <string name="poll_select_option">Por favor selecciona una opción</string>
+    <string name="poll_results">Resultados</string>
+    <string name="poll_total_votes">Total de votos</string>
+
+    <!-- Comments -->
+    <string name="comments_title">Comentarios</string>
+    <string name="comments_empty">No hay comentarios aún</string>
+    <string name="comment_hint">Escribe un comentario...</string>
+    <string name="comment_post_button">Publicar</string>
+    <string name="comment_reply_button">Responder</string>
+    <string name="comment_delete_button">Eliminar</string>
+    <string name="comment_report_button">Reportar</string>
+    <string name="comment_delete_confirm">¿Estás seguro de que quieres eliminar este comentario?</string>
+    <string name="comment_delete_success">Comentario eliminado</string>
+    <string name="comment_delete_error">Error al eliminar el comentario</string>
+    <string name="comment_post_success">Comentario publicado</string>
+    <string name="comment_post_error">Error al publicar el comentario</string>
+    <string name="comment_empty_error">El comentario no puede estar vacío</string>
+
+    <!-- Reports -->
+    <string name="report_title">Reportar</string>
+    <string name="report_reason_hint">Motivo del reporte</string>
+    <string name="report_details_hint">Detalles adicionales (opcional)</string>
+    <string name="report_submit_button">Enviar Reporte</string>
+    <string name="report_success">Reporte enviado exitosamente</string>
+    <string name="report_error">Error al enviar el reporte</string>
+    <string name="report_reason_required">Por favor indica un motivo</string>
+    <string name="report_poll_title">Reportar Encuesta</string>
+    <string name="report_comment_title">Reportar Comentario</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Mi Perfil</string>
+    <string name="profile_username">Nombre de usuario</string>
+    <string name="profile_email">Correo electrónico</string>
+    <string name="profile_member_since">Miembro desde</string>
+    <string name="profile_edit_button">Editar Perfil</string>
+    <string name="profile_logout_button">Cerrar Sesión</string>
+    <string name="profile_update_success">Perfil actualizado exitosamente</string>
+    <string name="profile_update_error">Error al actualizar el perfil</string>
+    <string name="profile_my_polls">Mis Encuestas</string>
+    <string name="profile_my_votes">Mis Votos</string>
+    <string name="profile_private_account">Cuenta Privada</string>
+    <string name="profile_public_account">Cuenta Pública</string>
+    <string name="profile_logout_confirm">¿Estás seguro de que quieres cerrar sesión?</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="nav_create_poll">Crear Encuesta</string>
+    <string name="nav_notifications">Notificaciones</string>
+    <string name="nav_feed">Lista de Encuestas</string>
+    <string name="nav_search">Buscar</string>
+
+    <!-- Create Poll -->
+    <string name="create_poll_title">Crear Nueva Encuesta</string>
+    <string name="create_poll_title_hint">Título de la encuesta</string>
+    <string name="create_poll_description_hint">Descripción (opcional)</string>
+    <string name="create_poll_question_hint">Pregunta</string>
+    <string name="create_poll_option1_hint">Opción 1</string>
+    <string name="create_poll_option2_hint">Opción 2</string>
+    <string name="create_poll_option3_hint">Opción 3 (opcional)</string>
+    <string name="create_poll_option4_hint">Opción 4 (opcional)</string>
+    <string name="create_poll_anonymous">Hacer esta encuesta anónima</string>
+    <string name="create_poll_button">Crear Encuesta</string>
+    <string name="create_poll_success">¡Encuesta creada exitosamente!</string>
+    <string name="create_poll_error">Error al crear la encuesta</string>
+    <string name="create_poll_title_required">El título es requerido</string>
+    <string name="create_poll_question_required">La pregunta es requerida</string>
+    <string name="create_poll_option1_required">La opción 1 es requerida</string>
+    <string name="create_poll_option2_required">La opción 2 es requerida</string>
+
+    <!-- Search -->
+    <string name="search_hint">Buscar encuestas...</string>
+    <string name="search_button">Buscar</string>
+    <string name="search_no_results">No se encontraron resultados</string>
+    <string name="search_results">Resultados de búsqueda</string>
+
+    <!-- Notifications -->
+    <string name="notifications_title">Notificaciones</string>
+    <string name="notifications_empty">No tienes notificaciones</string>
+    <string name="notification_new_comment">Nuevo comentario en tu encuesta</string>
+    <string name="notification_new_vote">Alguien votó en tu encuesta</string>
+
+    <!-- Dialog buttons -->
+    <string name="dialog_ok">Aceptar</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_yes">Sí</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_confirm">Confirmar</string>
+    <string name="dialog_close">Cerrar</string>
+
+    <!-- Internet/Connection -->
+    <string name="connection_error">Error de conexión. Por favor verifica tu internet</string>
+    <string name="connection_retry">Reintentar</string>
+    <string name="loading">Cargando...</string>
+    <string name="no_internet">Sin conexión a internet</string>
+
+    <!-- Dates -->
+    <string name="date_today">Hoy</string>
+    <string name="date_yesterday">Ayer</string>
+    <string name="date_days_ago">días atrás</string>
+
+    <!-- General Errors -->
+    <string name="error_general">Ha ocurrido un error. Por favor intenta de nuevo</string>
+    <string name="error_database">Error de base de datos</string>
+    <string name="error_unknown">Error desconocido</string>
+
+    <!-- Success messages -->
+    <string name="success_general">Operación exitosa</string>
 </resources>

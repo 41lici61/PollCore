@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PollCore">
         <activity
+            android:name=".PantallaPrincipal"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityRegister"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

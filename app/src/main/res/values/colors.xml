@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="frutiger_blue_deep">#0066B3</color>
+    <color name="frutiger_blue_dark">#0088CC</color>
+    <color name="frutiger_blue_medium">#00A3E0</color>
+    <color name="frutiger_blue_light">#4DC3F5</color>
+    <color name="frutiger_blue_bright">#7DD9FF</color>
+    <color name="frutiger_blue_pale">#B3E5FF</color>
+    <color name="frutiger_white_glass">#E6FFFFFF</color>
+    <color name="aero_glass">#99FFFFFF</color>
+    <color name="primary_color">#0088CC</color>
+    <color name="primary_text">#0066B3</color>
+    <color name="secondary_text">#4DC3F5</color>
 </resources>
