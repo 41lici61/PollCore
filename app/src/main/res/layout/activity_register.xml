@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/register"
     android:layout_height="match_parent">
 
     <ImageView
@@ -146,15 +148,13 @@
                             android:textColor="@color/frutiger_blue_dark" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
+                    <Switch
                         android:id="@+id/swPrivateAccount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
                         android:text="@string/register_private_account"
-                        android:textColor="@color/frutiger_blue_dark"
-                        app:thumbTint="@color/frutiger_blue_bright"
-                        app:trackTint="@color/frutiger_blue_light" />
+                        android:layout_marginBottom="16dp"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnRegister"
