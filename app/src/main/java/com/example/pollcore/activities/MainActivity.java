@@ -1,4 +1,4 @@
-package com.example.pollcore;
+package com.example.pollcore.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.pollcore.R;
 import com.example.pollcore.dao.UserDAO;
 import com.example.pollcore.models.User;
 

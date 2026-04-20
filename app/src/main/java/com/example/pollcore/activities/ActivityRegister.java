@@ -1,4 +1,4 @@
-package com.example.pollcore;
+package com.example.pollcore.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,10 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pollcore.R;
 import com.example.pollcore.dao.UserDAO;
 import com.example.pollcore.models.User;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class ActivityRegister extends AppCompatActivity {
 

@@ -44,6 +44,12 @@ dependencies {
     // Driver JDBC de PostgreSQL
     implementation("org.postgresql:postgresql:42.2.9")
 
+    //recyclerview
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
+
+    //card view
+    implementation("androidx.cardview:cardview:1.0.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

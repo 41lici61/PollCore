@@ -1,7 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.PollCore" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <!-- Base application theme for night mode con ActionBar -->
+    <style name="Base.Theme.PollCore" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- colores principales -->
+        <item name="colorPrimary">@color/frutiger_blue_deep</item>
+        <item name="colorPrimaryVariant">@color/frutiger_blue_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- color de la barra de estado -->
+        <item name="android:statusBarColor">@color/frutiger_blue_deep</item>
+
+        <!-- clor de fondo de la ventana -->
+        <item name="android:windowBackground">@color/frutiger_blue_deep</item>
+
+        <!-- personalizar overflow -->
+        <item name="android:popupMenuStyle">@style/Widget.PollCore.PopupMenu</item>
+    </style>
+
+    <!-- estilo menu (los tres puntitos) -->
+    <style name="Widget.PollCore.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">@color/frutiger_blue_deep</item>
+        <item name="android:textColor">@color/frutiger_blue_pale</item>
     </style>
 </resources>
