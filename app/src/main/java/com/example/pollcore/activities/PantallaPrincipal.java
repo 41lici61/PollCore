@@ -17,6 +17,7 @@ import com.example.pollcore.R;
 import com.example.pollcore.adapters.PollAdapter;
 import com.example.pollcore.dao.PollDAO;
 import com.example.pollcore.models.Poll;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class PantallaPrincipal extends AppCompatActivity {
     private List<Poll> pollList;
     private List<Poll> pollListFull;
     private String username;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,23 +40,25 @@ public class PantallaPrincipal extends AppCompatActivity {
                 .build();
         StrictMode.setThreadPolicy(policy);
 
-        // configuracion del actionbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("PollCore");
         }
 
-        // recibir los ndatos del usuario desde el login
         Intent intent = getIntent();
         username = intent.getStringExtra("usuario_username");
+        userId = intent.getIntExtra("usuario_id", -1);  // Recibir el ID del usuario
+
         if (username == null) {
             username = "usuario";
         }
 
-        // mensaje de bienvenida
+        if (userId == -1) {
+            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show();
+        }
+
         TextView tvWelcome = findViewById(R.id.tvWelcome);
         tvWelcome.setText("¡Bienvenido/a, " + username + "!");
 
-        //lista dinamica
         rvPolls = findViewById(R.id.rvPolls);
         rvPolls.setLayoutManager(new LinearLayoutManager(this));
         pollList = new ArrayList<>();
@@ -121,7 +125,9 @@ public class PantallaPrincipal extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "Ajustes - Próximamente", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PantallaPrincipal.this, SettingsActivity.class);
+            intent.putExtra("usuario_id", userId);
+            startActivity(intent);
             return true;
         } else if (id == R.id.action_create_poll) {
             Toast.makeText(this, "Crear encuesta - Próximamente", Toast.LENGTH_SHORT).show();

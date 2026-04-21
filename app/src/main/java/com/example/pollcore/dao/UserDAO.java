@@ -54,21 +54,28 @@ public class UserDAO {
 
         return null;
     }
+    public boolean deleteUser(int userId) {
+        String sql = "DELETE FROM pollcore.users WHERE id_user=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            Log.e("SQL", "delete user error", e);
+            return false;
+        }
+    }
 
     public boolean updateUser(User u) {
-
-        String sql = "UPDATE pollcore.users SET username=?, email=?, is_private=? WHERE id_user=?";
-
+        String sql = "UPDATE pollcore.users SET username=?, email=?, password_hash=?, is_private=? WHERE id_user=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, u.getUsername());
             ps.setString(2, u.getEmail());
-            ps.setBoolean(3, u.isPrivate());
-            ps.setInt(4, u.getIdUser());
-
+            ps.setString(3, u.getPasswordHash());
+            ps.setBoolean(4, u.isPrivate());
+            ps.setInt(5, u.getIdUser());
             ps.executeUpdate();
             return true;
-
         } catch (SQLException e) {
             Log.e("SQL", "update user error", e);
             return false;
