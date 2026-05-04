@@ -63,7 +63,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         rvPolls.setLayoutManager(new LinearLayoutManager(this));
         pollList = new ArrayList<>();
         pollListFull = new ArrayList<>();
-        pollAdapter = new PollAdapter(pollList, this);
+        //pollAdapter = new PollAdapter(pollList, this);
         rvPolls.setAdapter(pollAdapter);
         cargarEncuestas();
     }
@@ -77,7 +77,14 @@ public class PantallaPrincipal extends AppCompatActivity {
             pollList.addAll(polls);
             pollListFull.clear();
             pollListFull.addAll(polls);
-            pollAdapter.notifyDataSetChanged();
+
+            pollAdapter = new PollAdapter(pollList, this, pollId -> {
+                Intent intent = new Intent(PantallaPrincipal.this, PollDetailActivity.class);
+                intent.putExtra("poll_id", pollId);
+                intent.putExtra("user_id", userId);
+                startActivity(intent);
+            });
+            rvPolls.setAdapter(pollAdapter);
         } else {
             Toast.makeText(this, "No hay encuestas disponibles", Toast.LENGTH_SHORT).show();
         }
@@ -130,7 +137,9 @@ public class PantallaPrincipal extends AppCompatActivity {
             startActivity(intent);
             return true;
         } else if (id == R.id.action_create_poll) {
-            Toast.makeText(this, "Crear encuesta - Próximamente", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PantallaPrincipal.this, CreatePollActivity.class);
+            intent.putExtra("usuario_id", userId);
+            startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
             cerrarSesion();

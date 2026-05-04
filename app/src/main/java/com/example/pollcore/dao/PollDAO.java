@@ -66,25 +66,64 @@ public class PollDAO {
     }
 
     // DETALLE
-    public Poll getById(int id) {
-
+    public Poll getById(int pollId) {
         String sql = "SELECT * FROM pollcore.polls WHERE id_poll=?";
-
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
+            ps.setInt(1, pollId);
             ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) return mapPoll(rs);
-
+            if (rs.next()) {
+                return mapPoll(rs);
+            }
         } catch (SQLException e) {
             Log.e("SQL", "get poll error", e);
         }
-
         return null;
     }
 
-    //Convierte una fila de la BBDD (ResultSet) en un objeto Poll. Metodo para reutilizar codigo.
+    private void updateCounters(int pollId, int selectedOption) {
+        String sql = "UPDATE pollcore.polls SET " +
+                "count_option" + selectedOption + " = count_option" + selectedOption + " + 1, " +
+                "total_votes = total_votes + 1 " +
+                "WHERE id_poll=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, pollId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Log.e("SQL", "update counters error", e);
+        }
+    }
+
+    public boolean vote(int userId, int pollId, int selectedOption) {
+        String checkSql = "SELECT * FROM pollcore.votes WHERE id_user=? AND id_poll=?";
+        try (PreparedStatement ps = conn.prepareStatement(checkSql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, pollId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            Log.e("SQL", "check vote error", e);
+            return false;
+        }
+
+        String insertSql = "INSERT INTO pollcore.votes (id_user, id_poll, selected_option) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, pollId);
+            ps.setInt(3, selectedOption);
+            ps.executeUpdate();
+
+            // Update counters
+            updateCounters(pollId, selectedOption);
+
+            return true;
+        } catch (SQLException e) {
+            Log.e("SQL", "vote error", e);
+            return false;
+        }
+    }
+
     private Poll mapPoll(ResultSet rs) throws SQLException {
         return new Poll(
                 rs.getInt("id_poll"),

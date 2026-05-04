@@ -17,10 +17,17 @@ public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder
 
     private List<Poll> pollList;
     private Context context;
+    private int userId;
+    private OnPollClickListener listener;
 
-    public PollAdapter(List<Poll> pollList, Context context) {
+    public interface OnPollClickListener {
+        void onPollClick(int pollId);
+    }
+
+    public PollAdapter(List<Poll> pollList, Context context, OnPollClickListener listener) {
         this.pollList = pollList;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -37,9 +44,9 @@ public class PollAdapter extends RecyclerView.Adapter<PollAdapter.PollViewHolder
         holder.tvPollQuestion.setText(poll.getQuestion());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, PollDetailActivity.class);
-            intent.putExtra("poll_id", poll.getIdPoll());
-            context.startActivity(intent);
+            if (listener != null) {
+                listener.onPollClick(poll.getIdPoll());
+            }
         });
     }
 
