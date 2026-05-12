@@ -80,6 +80,52 @@ public class PollDAO {
         return null;
     }
 
+    public List<Poll> getPollsByUser(int userId) {
+        List<Poll> list = new ArrayList<>();
+        String sql = "SELECT * FROM pollcore.polls WHERE id_user=? ORDER BY created_at DESC";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(mapPoll(rs));
+            }
+        } catch (SQLException e) {
+            Log.e("SQL", "get polls by user error", e);
+        }
+        return list;
+    }
+
+    public boolean deletePoll(int pollId, int userId) {
+        String checkSql = "SELECT id_user FROM pollcore.polls WHERE id_poll=?";
+        try (PreparedStatement ps = conn.prepareStatement(checkSql)) {
+            ps.setInt(1, pollId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int ownerId = rs.getInt("id_user");
+                if (ownerId != userId) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            Log.e("SQL", "check poll owner error", e);
+            return false;
+        }
+
+        String deleteSql = "DELETE FROM pollcore.polls WHERE id_poll=?";
+        try (PreparedStatement ps = conn.prepareStatement(deleteSql)) {
+            ps.setInt(1, pollId);
+            int affected = ps.executeUpdate();
+            return affected > 0;
+        } catch (SQLException e) {
+            Log.e("SQL", "delete poll error", e);
+            return false;
+        }
+    }
+
     private void updateCounters(int pollId, int selectedOption) {
         String sql = "UPDATE pollcore.polls SET " +
                 "count_option" + selectedOption + " = count_option" + selectedOption + " + 1, " +
@@ -143,5 +189,41 @@ public class PollDAO {
                 rs.getBoolean("is_anonymous"),
                 rs.getTimestamp("created_at")
         );
+    }
+
+    //results
+    public int[] getPollResults(int pollId) {
+        String sql = "SELECT count_option1, count_option2, count_option3, count_option4, total_votes FROM pollcore.polls WHERE id_poll=?";
+        int[] results = new int[5]; // [option1, option2, option3, option4, totalVotes]
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, pollId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                results[0] = rs.getInt("count_option1");
+                results[1] = rs.getInt("count_option2");
+                results[2] = rs.getInt("count_option3");
+                results[3] = rs.getInt("count_option4");
+                results[4] = rs.getInt("total_votes");
+            }
+        } catch (SQLException e) {
+            Log.e("SQL", "get poll results error", e);
+        }
+
+        return results;
+    }
+
+    public boolean hasUserVoted(int userId, int pollId) {
+        String sql = "SELECT * FROM pollcore.votes WHERE id_user=? AND id_poll=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, pollId);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            Log.e("SQL", "check user voted error", e);
+            return false;
+        }
     }
 }

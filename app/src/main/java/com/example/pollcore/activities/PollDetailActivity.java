@@ -189,6 +189,10 @@ public class PollDetailActivity extends AppCompatActivity {
                     builder.setTitle("Error")
                             .setMessage("You have already voted on this poll or an error occurred.")
                             .setPositiveButton("OK", (dialog, which) -> {
+                                Intent intent = new Intent(PollDetailActivity.this, Comments.class);
+                                intent.putExtra("poll_id", pollId);
+                                intent.putExtra("user_id", userId);
+                                startActivity(intent);
                                 finish();
                             })
                             .show();

@@ -5,6 +5,281 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/results"
     tools:context=".activities.Comments">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!--seccion titulo-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Results"
+                android:textColor="@color/frutiger_blue_dark"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!--resultados-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/aero_glass">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tvPollQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Question here"
+                        android:textColor="@color/frutiger_blue_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvTotalVotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="Total votes: 0"
+                        android:textColor="@color/frutiger_blue_light"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvOption1Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Option 1"
+                        android:textColor="@color/frutiger_blue_dark"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp">
+
+                        <ProgressBar
+                            android:id="@+id/progressOption1"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"
+                            android:progress="0"
+                            android:progressTint="@color/frutiger_blue_bright" />
+
+                        <TextView
+                            android:id="@+id/tvOption1Percent"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="0%"
+                            android:textColor="@color/frutiger_blue_dark"
+                            android:textSize="12sp"
+                            android:gravity="end"
+                            android:paddingStart="8dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvOption2Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Option 2"
+                        android:textColor="@color/frutiger_blue_dark"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp">
+
+                        <ProgressBar
+                            android:id="@+id/progressOption2"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"
+                            android:progress="0"
+                            android:progressTint="@color/frutiger_blue_bright" />
+
+                        <TextView
+                            android:id="@+id/tvOption2Percent"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="0%"
+                            android:textColor="@color/frutiger_blue_dark"
+                            android:textSize="12sp"
+                            android:gravity="end"
+                            android:paddingStart="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutOption3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvOption3Text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Option 3"
+                            android:textColor="@color/frutiger_blue_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="4dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="16dp">
+
+                            <ProgressBar
+                                android:id="@+id/progressOption3"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_weight="1"
+                                android:progress="0"
+                                android:progressTint="@color/frutiger_blue_bright" />
+
+                            <TextView
+                                android:id="@+id/tvOption3Percent"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:text="0%"
+                                android:textColor="@color/frutiger_blue_dark"
+                                android:textSize="12sp"
+                                android:gravity="end"
+                                android:paddingStart="8dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutOption4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvOption4Text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Option 4"
+                            android:textColor="@color/frutiger_blue_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="4dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="16dp">
+
+                            <ProgressBar
+                                android:id="@+id/progressOption4"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_weight="1"
+                                android:progress="0"
+                                android:progressTint="@color/frutiger_blue_bright" />
+
+                            <TextView
+                                android:id="@+id/tvOption4Percent"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:text="0%"
+                                android:textColor="@color/frutiger_blue_dark"
+                                android:textSize="12sp"
+                                android:gravity="end"
+                                android:paddingStart="8dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Comments"
+                android:textColor="@color/frutiger_blue_dark"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/aero_glass">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <EditText
+                        android:id="@+id/etComment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Write a comment..."
+                        android:inputType="textMultiLine"
+                        android:maxLines="3"
+                        android:background="@android:drawable/editbox_background"
+                        android:padding="12dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnPostComment"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/buttonblue"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

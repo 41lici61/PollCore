@@ -1,11 +1,10 @@
 package com.example.pollcore.activities;
-
+import androidx.appcompat.widget.SearchView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -79,10 +78,23 @@ public class PantallaPrincipal extends AppCompatActivity {
             pollListFull.addAll(polls);
 
             pollAdapter = new PollAdapter(pollList, this, pollId -> {
-                Intent intent = new Intent(PantallaPrincipal.this, PollDetailActivity.class);
-                intent.putExtra("poll_id", pollId);
-                intent.putExtra("user_id", userId);
-                startActivity(intent);
+                new Thread(() -> {
+                    boolean hasVoted = pollDAO.hasUserVoted(userId, pollId);
+
+                    runOnUiThread(() -> {
+                        if (hasVoted) {
+                            Intent intent = new Intent(PantallaPrincipal.this, Comments.class);
+                            intent.putExtra("poll_id", pollId);
+                            intent.putExtra("user_id", userId);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(PantallaPrincipal.this, PollDetailActivity.class);
+                            intent.putExtra("poll_id", pollId);
+                            intent.putExtra("user_id", userId);
+                            startActivity(intent);
+                        }
+                    });
+                }).start();
             });
             rvPolls.setAdapter(pollAdapter);
         } else {
@@ -127,6 +139,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         pollAdapter.updateList(listaFiltrada);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -139,6 +152,11 @@ public class PantallaPrincipal extends AppCompatActivity {
         } else if (id == R.id.action_create_poll) {
             Intent intent = new Intent(PantallaPrincipal.this, CreatePollActivity.class);
             intent.putExtra("usuario_id", userId);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_my_polls) {
+            Intent intent = new Intent(PantallaPrincipal.this, MyPollsActivity.class);
+            intent.putExtra("user_id", userId);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
