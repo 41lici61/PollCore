@@ -4,14 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.pollcore.R;
+import com.example.pollcore.dao.ReportDAO;
 import com.example.pollcore.models.Comment;
-import com.example.pollcore.dao.CommentDAO;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -22,21 +22,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     private List<Comment> commentList;
     private Context context;
     private int userId;
-    private int pollId;
-    private OnReplyClickListener replyListener;
-    private CommentDAO commentDAO;
+    private ReportDAO reportDAO;
 
-    public interface OnReplyClickListener {
-        void onReplyClick(int commentId, String username);
-    }
-
-    public CommentAdapter(List<Comment> commentList, Context context, int userId, int pollId, OnReplyClickListener replyListener) {
+    public CommentAdapter(List<Comment> commentList, Context context, int userId) {
         this.commentList = commentList;
         this.context = context;
         this.userId = userId;
-        this.pollId = pollId;
-        this.replyListener = replyListener;
-        this.commentDAO = new CommentDAO();
+        this.reportDAO = new ReportDAO();
     }
 
     @NonNull
@@ -57,39 +49,60 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             holder.tvDate.setText(sdf.format(comment.getCreatedAt()));
         }
 
-        loadReplies(holder.llRepliesContainer, comment.getIdComment());
-
-        holder.btnReply.setOnClickListener(v -> {
-            if (replyListener != null) {
-                replyListener.onReplyClick(comment.getIdComment(), comment.getUsername());
-            }
+        // Report comment button
+        holder.btnReportComment.setOnClickListener(v -> {
+            showReportCommentDialog(comment.getIdComment(), comment.getUsername());
         });
     }
 
-    private void loadReplies(LinearLayout container, int parentCommentId) {
-        container.removeAllViews();
-        List<Comment> replies = commentDAO.getReplies(parentCommentId);
+    private void showReportCommentDialog(int commentId, String username) {
+        String[] reportReasons = {
+                "Contenido inapropiado",
+                "Spam o publicidad",
+                "Lenguaje ofensivo",
+                "Acoso o intimidación",
+                "Información falsa",
+                "Otro motivo"
+        };
 
-        for (Comment reply : replies) {
-            View replyView = LayoutInflater.from(context).inflate(R.layout.item_comment, null);
-            TextView tvUsername = replyView.findViewById(R.id.tvCommentUsername);
-            TextView tvDate = replyView.findViewById(R.id.tvCommentDate);
-            TextView tvContent = replyView.findViewById(R.id.tvCommentContent);
-            Button btnReply = replyView.findViewById(R.id.btnReply);
-            LinearLayout repliesContainer = replyView.findViewById(R.id.llRepliesContainer);
+        new AlertDialog.Builder(context)
+                .setTitle("Report Comment from " + username)
+                .setItems(reportReasons, (dialog, which) -> {
+                    String reason = reportReasons[which];
+                    showReasonDetailsDialog(commentId, reason);
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-            tvUsername.setText(reply.getUsername());
-            tvContent.setText(reply.getContent());
-            if (reply.getCreatedAt() != null) {
-                tvDate.setText(sdf.format(reply.getCreatedAt()));
-            }
+    private void showReasonDetailsDialog(int commentId, String reason) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Report Comment - " + reason);
 
-            btnReply.setVisibility(View.GONE);
-            repliesContainer.setVisibility(View.GONE);
+        final android.widget.EditText input = new android.widget.EditText(context);
+        input.setHint("Additional details (optional)");
+        input.setPadding(50, 20, 50, 20);
+        builder.setView(input);
 
-            container.addView(replyView);
-        }
+        builder.setPositiveButton("Send Report", (dialog, which) -> {
+            String details = input.getText().toString().trim();
+            sendReport(commentId, reason, details);
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
+    }
+
+    private void sendReport(int commentId, String reason, String details) {
+        new Thread(() -> {
+            boolean success = reportDAO.reportComment(userId, commentId, reason, details);
+            ((android.app.Activity) context).runOnUiThread(() -> {
+                if (success) {
+                    android.widget.Toast.makeText(context, "Report sent successfully. Thank you!", android.widget.Toast.LENGTH_LONG).show();
+                } else {
+                    android.widget.Toast.makeText(context, "Error sending report. You may have already reported this comment.", android.widget.Toast.LENGTH_SHORT).show();
+                }
+            });
+        }).start();
     }
 
     @Override
@@ -98,23 +111,20 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     }
 
     public void updateList(List<Comment> newList) {
-        commentList.clear();
-        commentList.addAll(newList);
+        this.commentList = newList;
         notifyDataSetChanged();
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
         TextView tvUsername, tvDate, tvContent;
-        Button btnReply;
-        LinearLayout llRepliesContainer;
+        ImageButton btnReportComment;
 
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvCommentUsername);
             tvDate = itemView.findViewById(R.id.tvCommentDate);
             tvContent = itemView.findViewById(R.id.tvCommentContent);
-            btnReply = itemView.findViewById(R.id.btnReply);
-            llRepliesContainer = itemView.findViewById(R.id.llRepliesContainer);
+            btnReportComment = itemView.findViewById(R.id.btnReportComment);
         }
     }
 }

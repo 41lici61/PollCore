@@ -21,6 +21,7 @@ import com.example.pollcore.R;
 import com.example.pollcore.adapters.CommentAdapter;
 import com.example.pollcore.dao.CommentDAO;
 import com.example.pollcore.dao.PollDAO;
+import com.example.pollcore.dao.ReportDAO;
 import com.example.pollcore.models.Comment;
 import com.example.pollcore.models.Poll;
 
@@ -36,13 +37,14 @@ public class Comments extends AppCompatActivity {
     private LinearLayout layoutOption3, layoutOption4;
 
     private EditText etComment;
-    private ImageButton btnPostComment;
+    private ImageButton btnPostComment, btnReportPoll;
     private RecyclerView rvComments;
 
     private PollDAO pollDAO;
     private CommentDAO commentDAO;
+    private ReportDAO reportDAO;
     private Poll currentPoll;
-    private List<Comment> commentList;
+    //private List<Comment> commentList;
     private CommentAdapter commentAdapter;
     private int pollId;
     private int userId;
@@ -77,6 +79,7 @@ public class Comments extends AppCompatActivity {
 
         pollDAO = new PollDAO();
         commentDAO = new CommentDAO();
+        reportDAO = new ReportDAO();
 
         initializeViews();
         setupRecyclerView();
@@ -84,6 +87,7 @@ public class Comments extends AppCompatActivity {
         loadPollData();
         loadPollResults();
         loadComments();
+        checkIfOwnerAndSetupReportButton();
 
         btnPostComment.setOnClickListener(v -> showPostCommentDialog());
     }
@@ -112,19 +116,12 @@ public class Comments extends AppCompatActivity {
 
         etComment = findViewById(R.id.etComment);
         btnPostComment = findViewById(R.id.btnPostComment);
+        btnReportPoll = findViewById(R.id.btnReportPoll);
         rvComments = findViewById(R.id.rvComments);
     }
 
     private void setupRecyclerView() {
-        commentList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(commentList, this, userId, pollId, (commentId, username) -> {
-            replyToCommentId = commentId;
-            replyingToUsername = username;
-            etComment.setHint("Replying to " + username + "...");
-            etComment.requestFocus();
-        });
         rvComments.setLayoutManager(new LinearLayoutManager(this));
-        rvComments.setAdapter(commentAdapter);
     }
 
     private void loadPollData() {
@@ -205,13 +202,77 @@ public class Comments extends AppCompatActivity {
         }
     }
 
+
+
     private void loadComments() {
         new Thread(() -> {
             List<Comment> comments = commentDAO.getCommentsByPoll(pollId);
             runOnUiThread(() -> {
-                commentList.clear();
-                commentList.addAll(comments);
-                commentAdapter.notifyDataSetChanged();
+                commentAdapter = new CommentAdapter(comments, this, userId);
+                rvComments.setAdapter(commentAdapter);
+            });
+        }).start();
+    }
+
+    private void checkIfOwnerAndSetupReportButton() {
+        new Thread(() -> {
+            boolean isOwner = pollDAO.isPollOwner(pollId, userId);
+            runOnUiThread(() -> {
+                if (!isOwner) {
+                    btnReportPoll.setVisibility(android.view.View.VISIBLE);
+                    btnReportPoll.setOnClickListener(v -> showReportDialog());
+                }
+            });
+        }).start();
+    }
+
+    private void showReportDialog() {
+        String[] reportReasons = {
+                "Contenido inapropiado",
+                "Spam o publicidad",
+                "Lenguaje ofensivo",
+                "Información falsa",
+                "Otro motivo"
+        };
+
+        new AlertDialog.Builder(this)
+                .setTitle("Report Poll")
+                .setItems(reportReasons, (dialog, which) -> {
+                    String reason = reportReasons[which];
+                    showReasonDetailsDialog(reason);
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void showReasonDetailsDialog(String reason) {
+        // Diálogo para detalles adicionales
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Report Poll - " + reason);
+
+        final EditText input = new EditText(this);
+        input.setHint("Additional details (optional)");
+        input.setPadding(50, 20, 50, 20);
+        builder.setView(input);
+
+        builder.setPositiveButton("Send Report", (dialog, which) -> {
+            String details = input.getText().toString().trim();
+            sendReport(reason, details);
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
+    }
+
+    private void sendReport(String reason, String details) {
+        new Thread(() -> {
+            boolean success = reportDAO.reportPoll(userId, pollId, reason, details);
+            runOnUiThread(() -> {
+                if (success) {
+                    Toast.makeText(this, "Report sent successfully. Thank you!", Toast.LENGTH_LONG).show();
+                    btnReportPoll.setVisibility(android.view.View.GONE);
+                } else {
+                    Toast.makeText(this, "Error sending report. You may have already reported this poll.", Toast.LENGTH_SHORT).show();
+                }
             });
         }).start();
     }
@@ -262,4 +323,6 @@ public class Comments extends AppCompatActivity {
             });
         }).start();
     }
+
+
 }

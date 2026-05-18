@@ -226,4 +226,18 @@ public class PollDAO {
             return false;
         }
     }
+
+    public boolean isPollOwner(int pollId, int userId) {
+        String sql = "SELECT id_user FROM pollcore.polls WHERE id_poll=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, pollId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_user") == userId;
+            }
+        } catch (SQLException e) {
+            Log.e("SQL", "check poll owner error", e);
+        }
+        return false;
+    }
 }
