@@ -34,8 +34,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Results"
-                    android:textColor="@color/frutiger_blue_dark"
-                    android:textSize="24sp"
+                    android:textColor="@color/frutiger_white_glass"
+                    android:textSize="34sp"
                     android:textStyle="bold" />
 
                 <ImageButton
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
                         android:text="Total votes: 0"
-                        android:textColor="@color/frutiger_blue_light"
+                        android:textColor="@color/frutiger_blue_deep"
                         android:textSize="14sp" />
 
                     <TextView
@@ -247,7 +247,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:text="Comments"
-                android:textColor="@color/frutiger_blue_dark"
+                android:textColor="@color/frutiger_white_glass"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 

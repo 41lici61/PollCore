@@ -29,8 +29,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="24dp"
                 android:text="Crear Nueva Encuesta"
-                android:textColor="@color/frutiger_blue_dark"
-                android:textSize="24sp"
+                android:textColor="@color/frutiger_white_glass"
+                android:textSize="34sp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
@@ -60,7 +60,8 @@
                             android:layout_height="wrap_content"
                             android:hint="Título de la encuesta"
                             android:maxLines="1"
-                            android:textColor="@color/frutiger_blue_dark" />
+                            android:textColor="@color/frutiger_blue_dark"
+                            android:textSize="20sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -94,7 +95,8 @@
                             android:layout_height="wrap_content"
                             android:hint="Pregunta"
                             android:maxLines="3"
-                            android:textColor="@color/frutiger_blue_dark" />
+                            android:textColor="@color/frutiger_blue_dark"
+                            android:textSize="20sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
@@ -104,7 +106,7 @@
                         android:layout_marginBottom="16dp"
                         android:text="Opciones de respuesta"
                         android:textColor="@color/frutiger_blue_dark"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -121,7 +123,8 @@
                             android:layout_height="wrap_content"
                             android:hint="Opción 1 *"
                             android:maxLines="2"
-                            android:textColor="@color/frutiger_blue_dark" />
+                            android:textColor="@color/frutiger_blue_dark"
+                            android:textSize="20sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -138,7 +141,8 @@
                             android:layout_height="wrap_content"
                             android:hint="Opción 2 *"
                             android:maxLines="2"
-                            android:textColor="@color/frutiger_blue_dark" />
+                            android:textColor="@color/frutiger_blue_dark"
+                            android:textSize="20sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -155,7 +159,8 @@
                             android:layout_height="wrap_content"
                             android:hint="Opción 3 (opcional)"
                             android:maxLines="2"
-                            android:textColor="@color/frutiger_blue_dark" />
+                            android:textColor="@color/frutiger_blue_dark"
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -191,7 +196,7 @@
                         android:text="Crear Encuesta"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         app:cornerRadius="28dp" />
 
                 </LinearLayout>

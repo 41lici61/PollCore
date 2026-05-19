@@ -131,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/login_register_link"
-                            android:textColor="@color/frutiger_blue_bright"
+                            android:textColor="@color/frutiger_blue_dark"
                             android:textStyle="bold" />
                     </LinearLayout>
 

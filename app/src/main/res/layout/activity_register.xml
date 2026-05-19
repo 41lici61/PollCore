@@ -186,7 +186,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/register_login_link"
-                            android:textColor="@color/frutiger_blue_bright"
+                            android:textColor="#00A9ED"
+                            android:textColorLink="#434890"
                             android:textStyle="bold" />
                     </LinearLayout>
 

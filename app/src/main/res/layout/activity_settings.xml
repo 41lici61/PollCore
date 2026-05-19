@@ -24,8 +24,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="32dp"
+                android:shadowColor="@color/primary_color"
                 android:text="Configuración"
-                android:textColor="@color/frutiger_blue_dark"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="@color/frutiger_blue_dark"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
@@ -61,9 +63,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="12dp"
                             android:text="usuario_actual"
-                            android:textColor="@color/frutiger_blue_light"
-                            android:padding="12dp" />
+                            android:textColor="@color/frutiger_blue_deep"
+                            android:textSize="16sp" />
 
                         <Button
                             android:id="@+id/btnEditUsername"
@@ -107,9 +110,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="12dp"
                             android:text="email@ejemplo.com"
-                            android:textColor="@color/frutiger_blue_light"
-                            android:padding="12dp" />
+                            android:textColor="@color/frutiger_blue_deep"
+                            android:textSize="16sp" />
 
                         <Button
                             android:id="@+id/btnEditEmail"
@@ -153,9 +157,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="12dp"
                             android:text="********"
-                            android:textColor="@color/frutiger_blue_light"
-                            android:padding="12dp" />
+                            android:textColor="@color/frutiger_blue_deep" />
 
                         <Button
                             android:id="@+id/btnEditPassword"
