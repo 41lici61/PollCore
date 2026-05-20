@@ -45,7 +45,7 @@ public class PollDAO {
         }
     }
 
-    // FEED
+    // FEED (LISTA DE ENCUESTAS EXISTENTES)
     public List<Poll> getFeed() {
 
         List<Poll> list = new ArrayList<>();
@@ -65,7 +65,7 @@ public class PollDAO {
         return list;
     }
 
-    // DETALLE
+    // DETALLE. SE USA CUANDO SE ABRE UNA ENCUESTA PARA VOTAR, CARGA LOS DATOS DE LA BBDD.
     public Poll getById(int pollId) {
         String sql = "SELECT * FROM pollcore.polls WHERE id_poll=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -80,6 +80,7 @@ public class PollDAO {
         return null;
     }
 
+    /*METODO USADO PARA OBTENER LAS POLLS DEL USUARIO EN LA OPCIÓN "My Polls"*/
     public List<Poll> getPollsByUser(int userId) {
         List<Poll> list = new ArrayList<>();
         String sql = "SELECT * FROM pollcore.polls WHERE id_user=? ORDER BY created_at DESC";
@@ -126,6 +127,7 @@ public class PollDAO {
         }
     }
 
+    /*ACTUALIZAR CONTADORES DE VOTOS*/
     private void updateCounters(int pollId, int selectedOption) {
         String sql = "UPDATE pollcore.polls SET " +
                 "count_option" + selectedOption + " = count_option" + selectedOption + " + 1, " +
@@ -139,6 +141,7 @@ public class PollDAO {
         }
     }
 
+    /*METODO PARA VOTAR*/
     public boolean vote(int userId, int pollId, int selectedOption) {
         String checkSql = "SELECT * FROM pollcore.votes WHERE id_user=? AND id_poll=?";
         try (PreparedStatement ps = conn.prepareStatement(checkSql)) {
@@ -170,6 +173,7 @@ public class PollDAO {
         }
     }
 
+    /*METODO PARA CONVERTIR EL RESULTADO DIRECTAMENTE*/
     private Poll mapPoll(ResultSet rs) throws SQLException {
         return new Poll(
                 rs.getInt("id_poll"),
@@ -214,6 +218,7 @@ public class PollDAO {
         return results;
     }
 
+    /*mETODO PARA EVITAR QUE UN USUARIO VOTE EN LA MISMA ENCUESTA 2 VECES*/
     public boolean hasUserVoted(int userId, int pollId) {
         String sql = "SELECT * FROM pollcore.votes WHERE id_user=? AND id_poll=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -227,6 +232,7 @@ public class PollDAO {
         }
     }
 
+    /*METODO PARA VERIFICAR SI EL USUARIO ES DUEÑO DE LA POLL PARA QUE EL BOTON DELETE SÓLO SE MUESTRE SI ES ASÍ*/
     public boolean isPollOwner(int pollId, int userId) {
         String sql = "SELECT id_user FROM pollcore.polls WHERE id_poll=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {

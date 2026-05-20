@@ -77,6 +77,7 @@ public class CommentDAO {
         return comments;
     }
 
+    /*SIN USO POR FALTA DE TIEMPO, NO SALEN LOS TESTS*/
     public List<Comment> getReplies(int commentId) {
         List<Comment> replies = new ArrayList<>();
         String sql = "SELECT c.*, u.username FROM pollcore.comments c " +
