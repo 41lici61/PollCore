@@ -79,7 +79,7 @@ public class CreatePollActivity extends AppCompatActivity {
 
         if (title.isEmpty()) {
             etTitle.setError("El título es requerido");
-            /*que es requestFocus?*/
+            /*solicita que ese componente reciba el foco de entrada del usuario, abre el teclado*/
             etTitle.requestFocus();
             return false;
         }
