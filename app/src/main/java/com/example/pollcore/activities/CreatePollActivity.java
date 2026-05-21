@@ -79,6 +79,7 @@ public class CreatePollActivity extends AppCompatActivity {
 
         if (title.isEmpty()) {
             etTitle.setError("El título es requerido");
+            /*que es requestFocus?*/
             etTitle.requestFocus();
             return false;
         }
@@ -158,7 +159,7 @@ public class CreatePollActivity extends AppCompatActivity {
         String option2 = etOption2.getText().toString().trim();
         String option3 = etOption3.getText().toString().trim();
         String option4 = etOption4.getText().toString().trim();
-        boolean isAnonymous = cbAnonymous.isChecked();
+        boolean isAnonymous = cbAnonymous.isChecked();//no sirve para nada ahora mismo (a checkear 💅)
 
         if (option3.isEmpty()) option3 = null;
         if (option4.isEmpty()) option4 = null;

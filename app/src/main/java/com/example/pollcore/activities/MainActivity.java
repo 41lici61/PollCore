@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*ajustes estéticos*/
+        /*permite que el contenido de la aplicación se dibuje debajo de las barras de estado y navegación*/
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         StrictMode.setThreadPolicy(policy);
 
+        /*ajuste de padding*/
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             Toast.makeText(this, "Bienvenido " + user.getUsername(), Toast.LENGTH_SHORT).show();
 
+            /*los datos del usuario (ID, nombre, email) se pasan a PantallaPrincipal mediante Intent.putExtra() para que la app sepa quién es el usuario logueado*/
             Intent intent = new Intent(MainActivity.this, PantallaPrincipal.class);
             intent.putExtra("usuario_id", user.getIdUser());
             intent.putExtra("usuario_username", user.getUsername());

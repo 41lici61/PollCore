@@ -331,7 +331,7 @@ public class SettingsActivity extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
                     builder.setTitle("Error")
                             .setMessage("No se pudo eliminar la cuenta. Por favor, inténtalo de nuevo más tarde.")
-                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setIcon(android.R.drawable.ic_dialog_alert)//iconos de anroid disponibles
                             .setPositiveButton("Aceptar", null);
                     builder.show();
                 }

@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:padding="24dp">
 
-            <!-- Card estilo Aero Glass -->
+            <!--card-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardLogin"
                 android:layout_width="match_parent"

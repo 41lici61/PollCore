@@ -62,6 +62,7 @@ public class ActivityRegister extends AppCompatActivity {
         }
 
         User user = new User(username, email, password);
+        // sin funcionalidad real actualmente
         user.setPrivate(swPrivateAccount.isChecked());
 
         UserDAO dao = new UserDAO();

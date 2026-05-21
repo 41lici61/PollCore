@@ -57,6 +57,7 @@ public class MyPollsActivity extends AppCompatActivity {
             PollDAO pollDAO = new PollDAO();
             List<Poll> polls = pollDAO.getPollsByUser(userId);
 
+            /*hilo secundario: evitar bloquear UI importante*/
             runOnUiThread(() -> {
                 pollList.clear();
                 pollList.addAll(polls);

@@ -45,7 +45,7 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra("usuario_username");
-        userId = intent.getIntExtra("usuario_id", -1);  // Recibir el ID del usuario
+        userId = intent.getIntExtra("usuario_id", -1);
 
         if (username == null) {
             username = "usuario";
@@ -81,6 +81,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                 new Thread(() -> {
                     boolean hasVoted = pollDAO.hasUserVoted(userId, pollId);
 
+                    /*Si el usuario ha votado ya la encuesta que ha seleccionado, se le conduce diractamente a la pantalla de resultados y comentarios*/
                     runOnUiThread(() -> {
                         if (hasVoted) {
                             Intent intent = new Intent(PantallaPrincipal.this, Comments.class);
@@ -107,6 +108,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_pantalla_principal, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
+        /*filtra las encuestas según el texto introducido mientras el usuario escribe*/
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setQueryHint("Buscar encuestas...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -169,12 +171,14 @@ public class PantallaPrincipal extends AppCompatActivity {
 
     private void cerrarSesion() {
         Intent intent = new Intent(PantallaPrincipal.this, MainActivity.class);
+        /*limpiar el historial*/
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
         Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
     }
 
+    /*Recargar las encuestas automáticamente*/
     @Override
     protected void onResume() {
         super.onResume();
