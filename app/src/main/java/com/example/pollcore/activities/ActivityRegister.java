@@ -39,6 +39,15 @@ public class ActivityRegister extends AppCompatActivity {
         btnRegister.setOnClickListener(v -> registrarUsuario());
     }
 
+
+    //Patterns.EMAIL_ADDRESS verifica que es un email
+    private boolean isValidEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            return false;
+        }
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
     private void registrarUsuario() {
         String username = etUsername.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
@@ -50,19 +59,33 @@ public class ActivityRegister extends AppCompatActivity {
             return;
         }
 
-        if (!password.equals(confirmPassword)) {
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+        if (!isValidEmail(email)) {
+            Toast.makeText(this, "Introduce un correo electrónico válido", Toast.LENGTH_SHORT).show();
+            etEmail.requestFocus();
             return;
         }
 
-        // contraseña minima de 6 caracteres
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            etPassword.requestFocus();
+            return;
+        }
+
+        //contraseña mínima de 6 caracteres
         if (password.length() < 6) {
             Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+            etPassword.requestFocus();
+            return;
+        }
+
+        //nombre de usuario mínimo 3 caracteres
+        if (username.length() < 3) {
+            Toast.makeText(this, "El nombre de usuario debe tener al menos 3 caracteres", Toast.LENGTH_SHORT).show();
+            etUsername.requestFocus();
             return;
         }
 
         User user = new User(username, email, password);
-        // sin funcionalidad real actualmente
         user.setPrivate(swPrivateAccount.isChecked());
 
         UserDAO dao = new UserDAO();
@@ -73,7 +96,7 @@ public class ActivityRegister extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } else {
-            Toast.makeText(this, "Error al registrar.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al registrar. El email puede estar duplicado", Toast.LENGTH_SHORT).show();
         }
     }
 }
