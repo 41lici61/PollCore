@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="24dp"
-                android:text="Crear Nueva Encuesta"
+                android:text="@string/create_poll_title"
                 android:textColor="@color/frutiger_white_glass"
                 android:textSize="34sp"
                 android:textStyle="bold" />
@@ -58,7 +58,7 @@
                             android:id="@+id/etTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Título de la encuesta"
+                            android:hint="@string/create_poll_title_hint"
                             android:maxLines="1"
                             android:textColor="@color/frutiger_blue_dark"
                             android:textSize="20sp" />
@@ -76,7 +76,7 @@
                             android:id="@+id/etDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Descripción (opcional)"
+                            android:hint="@string/create_poll_description_hint"
                             android:maxLines="3"
                             android:textColor="@color/frutiger_blue_dark" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -93,7 +93,7 @@
                             android:id="@+id/etQuestion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Pregunta"
+                            android:hint="@string/create_poll_question_hint"
                             android:maxLines="3"
                             android:textColor="@color/frutiger_blue_dark"
                             android:textSize="20sp" />
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
-                        android:text="Opciones de respuesta"
+                        android:text="@string/poll_options"
                         android:textColor="@color/frutiger_blue_dark"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -121,7 +121,7 @@
                             android:id="@+id/etOption1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Opción 1 *"
+                            android:hint="@string/create_poll_option1_hint"
                             android:maxLines="2"
                             android:textColor="@color/frutiger_blue_dark"
                             android:textSize="20sp" />
@@ -139,7 +139,7 @@
                             android:id="@+id/etOption2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Opción 2 *"
+                            android:hint="@string/create_poll_option2_hint"
                             android:maxLines="2"
                             android:textColor="@color/frutiger_blue_dark"
                             android:textSize="20sp" />
@@ -157,7 +157,7 @@
                             android:id="@+id/etOption3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Opción 3 (opcional)"
+                            android:hint="@string/create_poll_option3_hint"
                             android:maxLines="2"
                             android:textColor="@color/frutiger_blue_dark"
                             android:textSize="16sp" />
@@ -175,7 +175,7 @@
                             android:id="@+id/etOption4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Opción 4 (opcional)"
+                            android:hint="@string/create_poll_option4_hint"
                             android:maxLines="2"
                             android:textColor="@color/frutiger_blue_dark" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -185,7 +185,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="24dp"
-                        android:text="Encuesta anónima (los votos no mostrarán quién votó)"
+                        android:text="@string/create_poll_anonymous"
                         android:textColor="@color/frutiger_blue_dark" />
 
                     <com.google.android.material.button.MaterialButton
@@ -193,7 +193,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:background="@drawable/btn_frutiger_aero"
-                        android:text="Crear Encuesta"
+                        android:text="@string/create_poll_button"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
                         android:textSize="20sp"

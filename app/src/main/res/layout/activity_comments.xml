@@ -33,7 +33,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Results"
+                    android:text="@string/poll_results"
                     android:textColor="@color/frutiger_white_glass"
                     android:textSize="34sp"
                     android:textStyle="bold" />
@@ -78,7 +78,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:text="Total votes: 0"
+                        android:text="@string/poll_total_votes_placeholder"
                         android:textColor="@color/frutiger_blue_deep"
                         android:textSize="14sp" />
 
@@ -246,7 +246,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Comments"
+                android:text="@string/comments_title"
                 android:textColor="@color/frutiger_white_glass"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -270,7 +270,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Write a comment..."
+                        android:hint="@string/comment_hint"
                         android:inputType="textMultiLine"
                         android:maxLines="3"
                         android:background="@android:drawable/editbox_background"

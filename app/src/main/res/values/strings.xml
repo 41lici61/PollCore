@@ -166,4 +166,146 @@
 
     <!-- Success messages -->
     <string name="success_general">Operación exitosa</string>
+
+    <string name="menu_search">Buscar</string>
+    <string name="menu_my_polls">Mis Encuestas</string>
+    <string name="menu_create_poll">Crear Encuesta</string>
+    <string name="menu_settings">Ajustes</string>
+    <string name="menu_logout">Cerrar Sesión</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Configuración</string>
+    <string name="settings_username">Nombre de usuario</string>
+    <string name="settings_email">Correo electrónico</string>
+    <string name="settings_password">Contraseña</string>
+    <string name="settings_privacy">Privacidad</string>
+    <string name="settings_private_account">Cuenta privada</string>
+    <string name="settings_confirm_changes">Confirmar Cambios</string>
+    <string name="settings_delete_account">Eliminar Cuenta</string>
+    <string name="edit">Editar</string>
+
+    <!-- PantallaPrincipal -->
+    <string name="welcome_placeholder">Bienvenido/a, %s</string>
+
+    <!-- Comments -->
+    <string name="poll_total_votes_placeholder">Total de votos: %d</string>
+
+    <!-- SettingsActivity -->
+    <string name="error_user_not_identified">Error: Usuario no identificado</string>
+    <string name="error_loading_user">Error al cargar usuario</string>
+    <string name="edit_username_title">Editar nombre de usuario</string>
+    <string name="new_username_hint">Nuevo nombre de usuario</string>
+    <string name="pending">pendiente</string>
+    <string name="username_pending">Nombre de usuario pendiente de confirmar</string>
+    <string name="edit_email_title">Editar correo electrónico</string>
+    <string name="email_pending">Email pendiente de confirmar</string>
+    <string name="edit_password_title">Cambiar contraseña</string>
+    <string name="new_password_hint">Nueva contraseña</string>
+    <string name="confirm_password_hint">Confirmar contraseña</string>
+    <string name="password_pending">Contraseña pendiente de confirmar</string>
+    <string name="no_changes_pending">No hay cambios pendientes</string>
+    <string name="confirm_changes_title">Confirmar cambios</string>
+    <string name="confirm_changes_message">¿Confirmar los siguientes cambios?</string>
+    <string name="password_label">Contraseña</string>
+    <string name="privacy_label">Privacidad</string>
+    <string name="view_details">Ver detalles</string>
+    <string name="review_changes">Revisa los cambios antes de confirmar</string>
+    <string name="delete_account_title">Eliminar Cuenta</string>
+    <string name="delete_account_warning">¿Estás seguro de que quieres eliminar tu cuenta?\n\n⚠️ Esta acción es irreversible y perderás:\n• Todas tus encuestas creadas\n• Todos tus votos realizados\n• Todos tus comentarios\n• Todos tus datos personales</string>
+    <string name="deletion_cancelled">Eliminación cancelada</string>
+    <string name="more_info">Más información</string>
+    <string name="deletion_info">Se eliminarán permanentemente todos tus datos de la plataforma</string>
+    <string name="final_confirmation_title">Confirmación Final</string>
+    <string name="final_confirmation_message">ESTA ACCIÓN NO SE PUEDE DESHACER\n\nPara confirmar que deseas eliminar tu cuenta, escribe: ELIMINAR</string>
+    <string name="confirmation_text_hint">Escribe ELIMINAR</string>
+    <string name="confirm_deletion">Confirmar Eliminación</string>
+    <string name="incorrect_text">Texto incorrecto. Eliminación cancelada</string>
+    <string name="deleting_account">Eliminando cuenta...</string>
+    <string name="please_wait">Por favor espera</string>
+    <string name="account_deleted_title">Cuenta Eliminada</string>
+    <string name="account_deleted_message">Tu cuenta ha sido eliminada correctamente.\n\nLamentamos verte partir. ¡Esperamos verte de vuelta algún día!</string>
+    <string name="exit">Salir</string>
+    <string name="delete_account_error">No se pudo eliminar la cuenta. Por favor, inténtalo de nuevo más tarde.</string>
+
+    <!-- PollDetailActivity -->
+    <string name="error_poll_not_identified">Error: Encuesta no identificada</string>
+    <string name="error_loading_poll">Error al cargar la encuesta</string>
+    <string name="poll_total_votes_label">votos totales</string>
+    <string name="confirm_vote_title">Confirmar voto</string>
+    <string name="confirm_vote_message">¿Estás seguro de que quieres votar por esta opción?</string>
+    <string name="selected_option_label">Opción seleccionada:</string>
+
+    <!-- PantallaPrincipal -->
+    <string name="default_username">usuario</string>
+    <string name="welcome_message">¡Bienvenido/a, %s!</string>
+    <string name="logout_success">Sesión cerrada</string>
+
+    <!-- MyPollsActivity -->
+    <string name="no_polls_created">No has creado ninguna encuesta todavía</string>
+    <string name="delete_poll_title">Eliminar Encuesta</string>
+    <string name="delete_poll_warning">¿Estás seguro de que quieres eliminar esta encuesta?\n\nEsta acción no se puede deshacer.</string>
+    <string name="poll_deleted_success">Encuesta eliminada correctamente</string>
+    <string name="poll_deleted_error">Error al eliminar la encuesta</string>
+
+    <!-- CommentAdapter -->
+    <string name="report_reason_inappropriate">Contenido inapropiado</string>
+    <string name="report_reason_spam">Spam o publicidad</string>
+    <string name="report_reason_offensive">Lenguaje ofensivo</string>
+    <string name="report_reason_harassment">Acoso o intimidación</string>
+    <string name="report_reason_false_info">Información falsa</string>
+    <string name="report_reason_other">Otro motivo</string>
+
+    <string name="accept">Aceptar</string>
+    <string name="delete">Eliminar</string>
+    <string name="error">Error</string>
+    <string name="cancel">Cancelar</string>
+    <string name="confirm">Confirmar</string>
+
+    <!-- SettingsActivity -->
+    <string name="privacy_private">Privada</string>
+    <string name="privacy_public">Pública</string>
+
+    <string name="login_error_fields">Completa todos los campos</string>
+    <string name="login_error_credentials">Credenciales incorrectas</string>
+
+    <string name="poll_edit_fields">Puedes editar los campos</string>
+    <string name="poll_creating">Creando...</string>
+    <string name="poll_create_success_title">¡Encuesta creada!</string>
+    <string name="poll_create_success_message">Tu encuesta ha sido publicada exitosamente.</string>
+    <string name="poll_create_success_button">Ver encuestas</string>
+    <string name="poll_create_another_button">Crear otra</string>
+    <string name="poll_create_error_title">Error</string>
+    <string name="poll_create_error_message">No se pudo crear la encuesta. Por favor, inténtalo de nuevo.</string>
+    <string name="poll_create_error_button">Aceptar</string>
+
+    <string name="comment_error_poll">Error: Encuesta no identificada</string>
+    <string name="comment_error_load">Error al cargar la encuesta</string>
+    <string name="comment_total_votes">Total de votos: %d</string>
+    <string name="comment_report_poll_title">Reportar Encuesta</string>
+    <string name="comment_report_reason_inappropriate">Contenido inapropiado</string>
+    <string name="comment_report_reason_spam">Spam o publicidad</string>
+    <string name="comment_report_reason_offensive">Lenguaje ofensivo</string>
+    <string name="comment_report_reason_false">Información falsa</string>
+    <string name="comment_report_reason_other">Otro motivo</string>
+    <string name="comment_report_hint">Detalles adicionales (opcional)</string>
+    <string name="comment_report_send">Enviar Reporte</string>
+    <string name="comment_report_success">Reporte enviado exitosamente. ¡Gracias!</string>
+    <string name="comment_report_error">Error al enviar el reporte. Puede que ya hayas reportado esta encuesta.</string>
+    <string name="comment_write_hint">Escribe un comentario...</string>
+    <string name="comment_post_confirm_title">Confirmar</string>
+    <string name="comment_post_confirm_reply">Publicar respuesta a %s?</string>
+    <string name="comment_post_confirm_message">¿Publicar este comentario?</string>
+
+    <string name="register_error_fields">Completa todos los campos</string>
+    <string name="register_error_email_invalid">Introduce un correo electrónico válido</string>
+    <string name="register_error_password_mismatch">Las contraseñas no coinciden</string>
+    <string name="register_error_password_short">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="register_error_username_short">El nombre de usuario debe tener al menos 3 caracteres</string>
+
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="poll_edit_fields_button">Editar</string>
+
+
+
 </resources>

@@ -44,7 +44,6 @@ public class Comments extends AppCompatActivity {
     private CommentDAO commentDAO;
     private ReportDAO reportDAO;
     private Poll currentPoll;
-    //private List<Comment> commentList;
     private CommentAdapter commentAdapter;
     private int pollId;
     private int userId;
@@ -72,7 +71,7 @@ public class Comments extends AppCompatActivity {
         userId = getIntent().getIntExtra("user_id", -1);
 
         if (pollId == -1) {
-            Toast.makeText(this, "Error: Poll not identified", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.comment_error_poll, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -128,7 +127,7 @@ public class Comments extends AppCompatActivity {
         currentPoll = pollDAO.getById(pollId);
 
         if (currentPoll == null) {
-            Toast.makeText(this, "Error loading poll", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.comment_error_load, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -162,7 +161,7 @@ public class Comments extends AppCompatActivity {
         int countOption4 = results[3];
         int totalVotes = results[4];
 
-        tvTotalVotes.setText("Total votes: " + totalVotes);
+        tvTotalVotes.setText(String.format(getString(R.string.comment_total_votes), totalVotes));
 
         if (totalVotes > 0) {
             int percent1 = (countOption1 * 100) / totalVotes;
@@ -202,8 +201,6 @@ public class Comments extends AppCompatActivity {
         }
     }
 
-
-
     private void loadComments() {
         new Thread(() -> {
             List<Comment> comments = commentDAO.getCommentsByPoll(pollId);
@@ -228,38 +225,37 @@ public class Comments extends AppCompatActivity {
 
     private void showReportDialog() {
         String[] reportReasons = {
-                "Contenido inapropiado",
-                "Spam o publicidad",
-                "Lenguaje ofensivo",
-                "Información falsa",
-                "Otro motivo"
+                getString(R.string.comment_report_reason_inappropriate),
+                getString(R.string.comment_report_reason_spam),
+                getString(R.string.comment_report_reason_offensive),
+                getString(R.string.comment_report_reason_false),
+                getString(R.string.comment_report_reason_other)
         };
 
         new AlertDialog.Builder(this)
-                .setTitle("Report Poll")
+                .setTitle(R.string.comment_report_poll_title)
                 .setItems(reportReasons, (dialog, which) -> {
                     String reason = reportReasons[which];
                     showReasonDetailsDialog(reason);
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
     }
 
     private void showReasonDetailsDialog(String reason) {
-        // Diálogo para detalles adicionales
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Report Poll - " + reason);
+        builder.setTitle(getString(R.string.comment_report_poll_title) + " - " + reason);
 
         final EditText input = new EditText(this);
-        input.setHint("Additional details (optional)");
+        input.setHint(R.string.comment_report_hint);
         input.setPadding(50, 20, 50, 20);
         builder.setView(input);
 
-        builder.setPositiveButton("Send Report", (dialog, which) -> {
+        builder.setPositiveButton(R.string.comment_report_send, (dialog, which) -> {
             String details = input.getText().toString().trim();
             sendReport(reason, details);
         });
-        builder.setNegativeButton("Cancel", null);
+        builder.setNegativeButton(R.string.dialog_cancel, null);
         builder.show();
     }
 
@@ -268,10 +264,10 @@ public class Comments extends AppCompatActivity {
             boolean success = reportDAO.reportPoll(userId, pollId, reason, details);
             runOnUiThread(() -> {
                 if (success) {
-                    Toast.makeText(this, "Report sent successfully. Thank you!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.comment_report_success, Toast.LENGTH_LONG).show();
                     btnReportPoll.setVisibility(android.view.View.GONE);
                 } else {
-                    Toast.makeText(this, "Error sending report. You may have already reported this poll.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.comment_report_error, Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();
@@ -281,22 +277,22 @@ public class Comments extends AppCompatActivity {
         String content = etComment.getText().toString().trim();
 
         if (content.isEmpty()) {
-            Toast.makeText(this, "Please write a comment", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.comment_empty_error, Toast.LENGTH_SHORT).show();
             return;
         }
 
         String message;
         if (replyToCommentId != null) {
-            message = "Post reply to " + replyingToUsername + "?";
+            message = String.format(getString(R.string.comment_post_confirm_reply), replyingToUsername);
         } else {
-            message = "Post this comment?";
+            message = getString(R.string.comment_post_confirm_message);
         }
 
         new AlertDialog.Builder(this)
-                .setTitle("Confirm")
+                .setTitle(R.string.comment_post_confirm_title)
                 .setMessage(message)
-                .setPositiveButton("Post", (dialog, which) -> postComment(content))
-                .setNegativeButton("Cancel", null)
+                .setPositiveButton(R.string.comment_post_button, (dialog, which) -> postComment(content))
+                .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
     }
 
@@ -311,18 +307,16 @@ public class Comments extends AppCompatActivity {
             boolean success = commentDAO.createComment(comment);
             runOnUiThread(() -> {
                 if (success) {
-                    Toast.makeText(this, "Comment posted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.comment_post_success, Toast.LENGTH_SHORT).show();
                     replyToCommentId = null;
                     replyingToUsername = null;
                     etComment.setText("");
-                    etComment.setHint("Write a comment...");
+                    etComment.setHint(R.string.comment_write_hint);
                     loadComments();
                 } else {
-                    Toast.makeText(this, "Error posting comment", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.comment_post_error, Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();
     }
-
-
 }

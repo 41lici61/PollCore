@@ -25,12 +25,13 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="32dp"
                 android:shadowColor="@color/primary_color"
-                android:text="Configuración"
+                android:text="@string/settings_title"
                 android:textColor="#FFFFFF"
                 android:textColorHighlight="@color/frutiger_blue_dark"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
+            <!-- name -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,7 +49,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nombre de usuario"
+                        android:text="@string/settings_username"
                         android:textColor="@color/frutiger_blue_dark"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -72,12 +73,13 @@
                             android:id="@+id/btnEditUsername"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Editar"
+                            android:text="@string/edit"
                             android:backgroundTint="@color/frutiger_blue_bright" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- email -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,7 +97,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Correo electrónico"
+                        android:text="@string/settings_email"
                         android:textColor="@color/frutiger_blue_dark"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -119,12 +121,13 @@
                             android:id="@+id/btnEditEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Editar"
+                            android:text="@string/edit"
                             android:backgroundTint="@color/frutiger_blue_bright" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- pass -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -142,7 +145,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Contraseña"
+                        android:text="@string/settings_password"
                         android:textColor="@color/frutiger_blue_dark"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -165,12 +168,13 @@
                             android:id="@+id/btnEditPassword"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Editar"
+                            android:text="@string/edit"
                             android:backgroundTint="@color/frutiger_blue_bright" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -188,7 +192,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Privacidad"
+                        android:text="@string/settings_privacy"
                         android:textColor="@color/frutiger_blue_dark"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -197,13 +201,14 @@
                         android:id="@+id/swPrivateProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cuenta privada"
+                        android:text="@string/settings_private_account"
                         android:textColor="@color/frutiger_blue_dark"
                         app:thumbTint="@color/frutiger_blue_bright"
                         app:trackTint="@color/frutiger_blue_light" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- confirm -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnConfirmChanges"
                 android:layout_width="match_parent"
@@ -211,19 +216,20 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/btn_frutiger_aero"
-                android:text="Confirmar Cambios"
+                android:text="@string/settings_confirm_changes"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:cornerRadius="28dp" />
 
+            <!-- delete -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDeleteAccount"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="#D32F2F"
-                android:text="Eliminar Cuenta"
+                android:text="@string/settings_delete_account"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"

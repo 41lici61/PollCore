@@ -55,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
         userId = intent.getIntExtra("usuario_id", -1);
 
         if (userId == -1) {
-            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_user_not_identified, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -71,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void cargarUsuario() {
         currentUser = userDAO.getById(userId);
         if (currentUser == null) {
-            Toast.makeText(this, "Error al cargar usuario", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_loading_user, Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -105,62 +105,62 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void mostrarDialogoEditarUsername() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Editar nombre de usuario");
+        builder.setTitle(R.string.edit_username_title);
 
         final EditText input = new EditText(this);
         input.setText(currentUser.getUsername());
-        input.setHint("Nuevo nombre de usuario");
+        input.setHint(R.string.new_username_hint);
         builder.setView(input);
 
-        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+        builder.setPositiveButton(R.string.accept, (dialog, which) -> {
             String nuevoUsername = input.getText().toString().trim();
             if (!nuevoUsername.isEmpty() && nuevoUsername.length() >= 3) {
                 newUsername = nuevoUsername;
-                tvCurrentUsername.setText(newUsername + " (pendiente)");
-                Toast.makeText(this, "Nombre de usuario pendiente de confirmar", Toast.LENGTH_SHORT).show();
+                tvCurrentUsername.setText(newUsername + " (" + getString(R.string.pending) + ")");
+                Toast.makeText(this, R.string.username_pending, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "El nombre debe tener al menos 3 caracteres", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_username_short, Toast.LENGTH_SHORT).show();
             }
         });
 
-        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton(R.string.dialog_cancel, (dialog, which) -> dialog.cancel());
         builder.show();
     }
 
     private void mostrarDialogoEditarEmail() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Editar correo electrónico");
+        builder.setTitle(R.string.edit_email_title);
 
         final EditText input = new EditText(this);
         input.setText(currentUser.getEmail());
         input.setHint("nuevo@email.com");
         builder.setView(input);
 
-        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+        builder.setPositiveButton(R.string.accept, (dialog, which) -> {
             String nuevoEmail = input.getText().toString().trim();
             if (!nuevoEmail.isEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(nuevoEmail).matches()) {
                 newEmail = nuevoEmail;
-                tvCurrentEmail.setText(newEmail + " (pendiente)");
-                Toast.makeText(this, "Email pendiente de confirmar", Toast.LENGTH_SHORT).show();
+                tvCurrentEmail.setText(newEmail + " (" + getString(R.string.pending) + ")");
+                Toast.makeText(this, R.string.email_pending, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Email inválido", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_email_invalid, Toast.LENGTH_SHORT).show();
             }
         });
 
-        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton(R.string.dialog_cancel, (dialog, which) -> dialog.cancel());
         builder.show();
     }
 
     private void mostrarDialogoEditarPassword() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Cambiar contraseña");
+        builder.setTitle(R.string.edit_password_title);
 
         final EditText inputPass = new EditText(this);
-        inputPass.setHint("Nueva contraseña");
+        inputPass.setHint(R.string.new_password_hint);
         inputPass.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         final EditText inputConfirm = new EditText(this);
-        inputConfirm.setHint("Confirmar contraseña");
+        inputConfirm.setHint(R.string.confirm_password_hint);
         inputConfirm.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         LinearLayout layout = new LinearLayout(this);
@@ -170,24 +170,24 @@ public class SettingsActivity extends AppCompatActivity {
         layout.addView(inputConfirm);
         builder.setView(layout);
 
-        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+        builder.setPositiveButton(R.string.accept, (dialog, which) -> {
             String nuevaPass = inputPass.getText().toString().trim();
             String confirmPass = inputConfirm.getText().toString().trim();
 
             if (nuevaPass.isEmpty()) {
-                Toast.makeText(this, "La contraseña no puede estar vacía", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_password_required, Toast.LENGTH_SHORT).show();
             } else if (nuevaPass.length() < 6) {
-                Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_password_short, Toast.LENGTH_SHORT).show();
             } else if (!nuevaPass.equals(confirmPass)) {
-                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_password_mismatch, Toast.LENGTH_SHORT).show();
             } else {
                 newPassword = nuevaPass;
-                tvCurrentPassword.setText("******** (pendiente)");
-                Toast.makeText(this, "Contraseña pendiente de confirmar", Toast.LENGTH_SHORT).show();
+                tvCurrentPassword.setText("******** (" + getString(R.string.pending) + ")");
+                Toast.makeText(this, R.string.password_pending, Toast.LENGTH_SHORT).show();
             }
         });
 
-        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton(R.string.dialog_cancel, (dialog, which) -> dialog.cancel());
         builder.show();
     }
 
@@ -196,26 +196,26 @@ public class SettingsActivity extends AppCompatActivity {
                 swPrivateProfile.isChecked() != currentUser.isPrivate());
 
         if (!hayCambios) {
-            Toast.makeText(this, "No hay cambios pendientes", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_changes_pending, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        StringBuilder mensaje = new StringBuilder("¿Confirmar los siguientes cambios?\n\n");
+        StringBuilder mensaje = new StringBuilder(getString(R.string.confirm_changes_message) + "\n\n");
         if (newUsername != null) mensaje.append("• Username: ").append(currentUser.getUsername()).append(" → ").append(newUsername).append("\n");
         if (newEmail != null) mensaje.append("• Email: ").append(currentUser.getEmail()).append(" → ").append(newEmail).append("\n");
-        if (newPassword != null) mensaje.append("• Contraseña: *******\n");
+        if (newPassword != null) mensaje.append("• ").append(getString(R.string.password_label)).append(": *******\n");
         if (swPrivateProfile.isChecked() != currentUser.isPrivate()) {
-            mensaje.append("• Privacidad: → ").append(swPrivateProfile.isChecked() ? "Privada" : "Pública").append("\n");
+            mensaje.append("• ").append(getString(R.string.privacy_label)).append(": → ").append(swPrivateProfile.isChecked() ? getString(R.string.privacy_private) : getString(R.string.privacy_public)).append("\n");
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmar cambios")
+        builder.setTitle(R.string.confirm_changes_title)
                 .setMessage(mensaje.toString())
                 .setIcon(android.R.drawable.ic_dialog_info)
-                .setPositiveButton("Confirmar", (dialog, which) -> guardarCambios())
-                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
-                .setNeutralButton("Ver detalles", (dialog, which) -> {
-                    Toast.makeText(this, "Revisa los cambios antes de confirmar", Toast.LENGTH_LONG).show();
+                .setPositiveButton(R.string.dialog_confirm, (dialog, which) -> guardarCambios())
+                .setNegativeButton(R.string.dialog_cancel, (dialog, which) -> dialog.dismiss())
+                .setNeutralButton(R.string.view_details, (dialog, which) -> {
+                    Toast.makeText(this, R.string.review_changes, Toast.LENGTH_LONG).show();
                 })
                 .show();
     }
@@ -229,7 +229,7 @@ public class SettingsActivity extends AppCompatActivity {
         boolean exito = userDAO.updateUser(currentUser);
 
         if (exito) {
-            Toast.makeText(this, "Cambios guardados correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.profile_update_success, Toast.LENGTH_SHORT).show();
 
             newUsername = null;
             newEmail = null;
@@ -243,56 +243,50 @@ public class SettingsActivity extends AppCompatActivity {
             resultIntent.putExtra("usuario_actualizado", true);
             setResult(RESULT_OK, resultIntent);
         } else {
-            Toast.makeText(this, "Error al guardar cambios", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.profile_update_error, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void mostrarDialogoEliminarCuenta() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Eliminar Cuenta")
-                .setMessage("¿Estás seguro de que quieres eliminar tu cuenta?\n\n"
-                        + "⚠️ Esta acción es irreversible y perderás:\n"
-                        + "• Todas tus encuestas creadas\n"
-                        + "• Todos tus votos realizados\n"
-                        + "• Todos tus comentarios\n"
-                        + "• Todos tus datos personales")
+        builder.setTitle(R.string.delete_account_title)
+                .setMessage(R.string.delete_account_warning)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setCancelable(false)
-                .setPositiveButton("Eliminar", (dialog, which) -> mostrarDialogoConfirmacionFinal())
-                .setNegativeButton("Cancelar", (dialog, which) -> {
-                    Toast.makeText(this, "Eliminación cancelada", Toast.LENGTH_SHORT).show();
+                .setPositiveButton(R.string.delete, (dialog, which) -> mostrarDialogoConfirmacionFinal())
+                .setNegativeButton(R.string.dialog_cancel, (dialog, which) -> {
+                    Toast.makeText(this, R.string.deletion_cancelled, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 })
-                .setNeutralButton("Más información", (dialog, which) -> {
-                    Toast.makeText(this, "Se eliminarán permanentemente todos tus datos de la plataforma", Toast.LENGTH_LONG).show();
+                .setNeutralButton(R.string.more_info, (dialog, which) -> {
+                    Toast.makeText(this, R.string.deletion_info, Toast.LENGTH_LONG).show();
                 });
         builder.show();
     }
 
     private void mostrarDialogoConfirmacionFinal() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmación Final")
-                .setMessage("ESTA ACCIÓN NO SE PUEDE DESHACER\n\n"
-                        + "Para confirmar que deseas eliminar tu cuenta, escribe: ELIMINAR")
+        builder.setTitle(R.string.final_confirmation_title)
+                .setMessage(R.string.final_confirmation_message)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setCancelable(false);
 
         final EditText input = new EditText(this);
-        input.setHint("Escribe ELIMINAR");
+        input.setHint(R.string.confirmation_text_hint);
         input.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
-        builder.setPositiveButton("Confirmar Eliminación", (dialog, which) -> {
+        builder.setPositiveButton(R.string.confirm_deletion, (dialog, which) -> {
             String confirmacion = input.getText().toString().trim();
             if (confirmacion.equals("ELIMINAR")) {
                 eliminarCuenta();
             } else {
-                Toast.makeText(this, "Texto incorrecto. Eliminación cancelada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.incorrect_text, Toast.LENGTH_SHORT).show();
             }
         });
 
-        builder.setNegativeButton("Cancelar", (dialog, which) -> {
-            Toast.makeText(this, "Eliminación cancelada", Toast.LENGTH_SHORT).show();
+        builder.setNegativeButton(R.string.dialog_cancel, (dialog, which) -> {
+            Toast.makeText(this, R.string.deletion_cancelled, Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
 
@@ -301,8 +295,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void eliminarCuenta() {
         AlertDialog progresoDialog = new AlertDialog.Builder(this)
-                .setTitle("Eliminando cuenta...")
-                .setMessage("Por favor espera")
+                .setTitle(R.string.deleting_account)
+                .setMessage(R.string.please_wait)
                 .setCancelable(false)
                 .create();
         progresoDialog.show();
@@ -315,12 +309,11 @@ public class SettingsActivity extends AppCompatActivity {
 
                 if (exito) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-                    builder.setTitle("Cuenta Eliminada")
-                            .setMessage("Tu cuenta ha sido eliminada correctamente.\n\n"
-                                    + "Lamentamos verte partir. ¡Esperamos verte de vuelta algún día!")
+                    builder.setTitle(R.string.account_deleted_title)
+                            .setMessage(R.string.account_deleted_message)
                             .setIcon(android.R.drawable.ic_dialog_info)
                             .setCancelable(false)
-                            .setPositiveButton("Salir", (dialog, which) -> {
+                            .setPositiveButton(R.string.exit, (dialog, which) -> {
                                 Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
@@ -329,10 +322,10 @@ public class SettingsActivity extends AppCompatActivity {
                     builder.show();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-                    builder.setTitle("Error")
-                            .setMessage("No se pudo eliminar la cuenta. Por favor, inténtalo de nuevo más tarde.")
-                            .setIcon(android.R.drawable.ic_dialog_alert)//iconos de anroid disponibles
-                            .setPositiveButton("Aceptar", null);
+                    builder.setTitle(R.string.error)
+                            .setMessage(R.string.delete_account_error)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(R.string.dialog_ok, null);
                     builder.show();
                 }
             });

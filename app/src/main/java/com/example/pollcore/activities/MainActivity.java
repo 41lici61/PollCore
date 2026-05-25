@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*ajustes estéticos*/
-        /*permite que el contenido de la aplicación se dibuje debajo de las barras de estado y navegación*/
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
@@ -36,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         StrictMode.setThreadPolicy(policy);
 
-        /*ajuste de padding*/
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.login_error_fields, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -69,9 +66,8 @@ public class MainActivity extends AppCompatActivity {
         User user = dao.login(email, password);
 
         if (user != null) {
-            Toast.makeText(this, "Bienvenido " + user.getUsername(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.login_success) + " " + user.getUsername(), Toast.LENGTH_SHORT).show();
 
-            /*los datos del usuario (ID, nombre, email) se pasan a PantallaPrincipal mediante Intent.putExtra() para que la app sepa quién es el usuario logueado*/
             Intent intent = new Intent(MainActivity.this, PantallaPrincipal.class);
             intent.putExtra("usuario_id", user.getIdUser());
             intent.putExtra("usuario_username", user.getUsername());
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.login_error_credentials, Toast.LENGTH_SHORT).show();
         }
     }
 }

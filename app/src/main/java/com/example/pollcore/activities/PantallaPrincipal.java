@@ -40,7 +40,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("PollCore");
+            getSupportActionBar().setTitle(R.string.app_name);
         }
 
         Intent intent = getIntent();
@@ -48,21 +48,20 @@ public class PantallaPrincipal extends AppCompatActivity {
         userId = intent.getIntExtra("usuario_id", -1);
 
         if (username == null) {
-            username = "usuario";
+            username = getString(R.string.default_username);
         }
 
         if (userId == -1) {
-            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_user_not_identified, Toast.LENGTH_SHORT).show();
         }
 
         TextView tvWelcome = findViewById(R.id.tvWelcome);
-        tvWelcome.setText("¡Bienvenido/a, " + username + "!");
+        tvWelcome.setText(String.format(getString(R.string.welcome_message), username));
 
         rvPolls = findViewById(R.id.rvPolls);
         rvPolls.setLayoutManager(new LinearLayoutManager(this));
         pollList = new ArrayList<>();
         pollListFull = new ArrayList<>();
-        //pollAdapter = new PollAdapter(pollList, this);
         rvPolls.setAdapter(pollAdapter);
         cargarEncuestas();
     }
@@ -81,7 +80,6 @@ public class PantallaPrincipal extends AppCompatActivity {
                 new Thread(() -> {
                     boolean hasVoted = pollDAO.hasUserVoted(userId, pollId);
 
-                    /*Si el usuario ha votado ya la encuesta que ha seleccionado, se le conduce diractamente a la pantalla de resultados y comentarios*/
                     runOnUiThread(() -> {
                         if (hasVoted) {
                             Intent intent = new Intent(PantallaPrincipal.this, Comments.class);
@@ -99,7 +97,7 @@ public class PantallaPrincipal extends AppCompatActivity {
             });
             rvPolls.setAdapter(pollAdapter);
         } else {
-            Toast.makeText(this, "No hay encuestas disponibles", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.feed_empty, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -108,9 +106,8 @@ public class PantallaPrincipal extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_pantalla_principal, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        /*filtra las encuestas según el texto introducido mientras el usuario escribe*/
         SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("Buscar encuestas...");
+        searchView.setQueryHint(getString(R.string.search_hint));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -141,7 +138,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         pollAdapter.updateList(listaFiltrada);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -171,14 +167,12 @@ public class PantallaPrincipal extends AppCompatActivity {
 
     private void cerrarSesion() {
         Intent intent = new Intent(PantallaPrincipal.this, MainActivity.class);
-        /*limpiar el historial*/
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
-        Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.logout_success, Toast.LENGTH_SHORT).show();
     }
 
-    /*Recargar las encuestas automáticamente*/
     @Override
     protected void onResume() {
         super.onResume();

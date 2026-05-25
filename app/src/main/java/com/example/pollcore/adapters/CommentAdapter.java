@@ -57,38 +57,38 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     private void showReportCommentDialog(int commentId, String username) {
         String[] reportReasons = {
-                "Contenido inapropiado",
-                "Spam o publicidad",
-                "Lenguaje ofensivo",
-                "Acoso o intimidación",
-                "Información falsa",
-                "Otro motivo"
+                context.getString(R.string.report_reason_inappropriate),
+                context.getString(R.string.report_reason_spam),
+                context.getString(R.string.report_reason_offensive),
+                context.getString(R.string.report_reason_harassment),
+                context.getString(R.string.report_reason_false_info),
+                context.getString(R.string.report_reason_other)
         };
 
         new AlertDialog.Builder(context)
-                .setTitle("Report Comment from " + username)
+                .setTitle(context.getString(R.string.report_comment_title) + " " + username)
                 .setItems(reportReasons, (dialog, which) -> {
                     String reason = reportReasons[which];
                     showReasonDetailsDialog(commentId, reason);
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
     }
 
     private void showReasonDetailsDialog(int commentId, String reason) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Report Comment - " + reason);
+        builder.setTitle(context.getString(R.string.report_comment_title) + " - " + reason);
 
         final android.widget.EditText input = new android.widget.EditText(context);
-        input.setHint("Additional details (optional)");
+        input.setHint(R.string.report_details_hint);
         input.setPadding(50, 20, 50, 20);
         builder.setView(input);
 
-        builder.setPositiveButton("Send Report", (dialog, which) -> {
+        builder.setPositiveButton(R.string.report_submit_button, (dialog, which) -> {
             String details = input.getText().toString().trim();
             sendReport(commentId, reason, details);
         });
-        builder.setNegativeButton("Cancel", null);
+        builder.setNegativeButton(R.string.dialog_cancel, null);
         builder.show();
     }
 
@@ -97,9 +97,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             boolean success = reportDAO.reportComment(userId, commentId, reason, details);
             ((android.app.Activity) context).runOnUiThread(() -> {
                 if (success) {
-                    android.widget.Toast.makeText(context, "Report sent successfully. Thank you!", android.widget.Toast.LENGTH_LONG).show();
+                    android.widget.Toast.makeText(context, R.string.report_success, android.widget.Toast.LENGTH_LONG).show();
                 } else {
-                    android.widget.Toast.makeText(context, "Error sending report. You may have already reported this comment.", android.widget.Toast.LENGTH_SHORT).show();
+                    android.widget.Toast.makeText(context, R.string.report_error, android.widget.Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();

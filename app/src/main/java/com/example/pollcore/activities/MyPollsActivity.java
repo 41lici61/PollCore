@@ -33,14 +33,14 @@ public class MyPollsActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("My Polls");
+            getSupportActionBar().setTitle(R.string.menu_my_polls);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         userId = getIntent().getIntExtra("user_id", -1);
 
         if (userId == -1) {
-            Toast.makeText(this, "Error: User not identified", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_user_not_identified, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -57,7 +57,6 @@ public class MyPollsActivity extends AppCompatActivity {
             PollDAO pollDAO = new PollDAO();
             List<Poll> polls = pollDAO.getPollsByUser(userId);
 
-            /*hilo secundario: evitar bloquear UI importante*/
             runOnUiThread(() -> {
                 pollList.clear();
                 pollList.addAll(polls);
@@ -74,7 +73,7 @@ public class MyPollsActivity extends AppCompatActivity {
                 rvMyPolls.setAdapter(pollAdapter);
 
                 if (polls.isEmpty()) {
-                    Toast.makeText(this, "You haven't created any polls yet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.no_polls_created, Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();
@@ -82,10 +81,10 @@ public class MyPollsActivity extends AppCompatActivity {
 
     private void showDeleteConfirmationDialog(int pollId, int position) {
         new AlertDialog.Builder(this)
-                .setTitle("Delete Poll")
-                .setMessage("Are you sure you want to delete this poll?\n\nThis action cannot be undone.")
-                .setPositiveButton("Delete", (dialog, which) -> deletePoll(pollId, position))
-                .setNegativeButton("Cancel", null)
+                .setTitle(R.string.delete_poll_title)
+                .setMessage(R.string.delete_poll_warning)
+                .setPositiveButton(R.string.delete, (dialog, which) -> deletePoll(pollId, position))
+                .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
     }
 
@@ -97,12 +96,12 @@ public class MyPollsActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 if (success) {
                     pollAdapter.removeItem(position);
-                    Toast.makeText(this, "Poll deleted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.poll_deleted_success, Toast.LENGTH_SHORT).show();
                     if (pollList.isEmpty()) {
-                        Toast.makeText(this, "You haven't created any polls yet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.no_polls_created, Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(this, "Error deleting poll", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.poll_deleted_error, Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();

@@ -102,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:text="Select an option:"
+                        android:text="@string/poll_select_option"
                         android:textColor="@color/frutiger_blue_dark"
                         android:textSize="20sp"
                         android:textStyle="bold" />

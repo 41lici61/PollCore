@@ -39,8 +39,6 @@ public class ActivityRegister extends AppCompatActivity {
         btnRegister.setOnClickListener(v -> registrarUsuario());
     }
 
-
-    //Patterns.EMAIL_ADDRESS verifica que es un email
     private boolean isValidEmail(String email) {
         if (email == null || email.isEmpty()) {
             return false;
@@ -55,32 +53,30 @@ public class ActivityRegister extends AppCompatActivity {
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
         if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.register_error_fields, Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!isValidEmail(email)) {
-            Toast.makeText(this, "Introduce un correo electrónico válido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.register_error_email_invalid, Toast.LENGTH_SHORT).show();
             etEmail.requestFocus();
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.register_error_password_mismatch, Toast.LENGTH_SHORT).show();
             etPassword.requestFocus();
             return;
         }
 
-        //contraseña mínima de 6 caracteres
         if (password.length() < 6) {
-            Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.register_error_password_short, Toast.LENGTH_SHORT).show();
             etPassword.requestFocus();
             return;
         }
 
-        //nombre de usuario mínimo 3 caracteres
         if (username.length() < 3) {
-            Toast.makeText(this, "El nombre de usuario debe tener al menos 3 caracteres", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.register_error_username_short, Toast.LENGTH_SHORT).show();
             etUsername.requestFocus();
             return;
         }
@@ -92,11 +88,11 @@ public class ActivityRegister extends AppCompatActivity {
         boolean insertado = dao.register(user);
 
         if (insertado) {
-            Toast.makeText(this, "Registro correcto", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.register_success, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } else {
-            Toast.makeText(this, "Error al registrar. El email puede estar duplicado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.register_error, Toast.LENGTH_SHORT).show();
         }
     }
 }

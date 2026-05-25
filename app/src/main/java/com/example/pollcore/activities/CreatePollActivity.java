@@ -49,7 +49,7 @@ public class CreatePollActivity extends AppCompatActivity {
         userId = intent.getIntExtra("usuario_id", -1);
 
         if (userId == -1) {
-            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_user_not_identified, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -78,26 +78,25 @@ public class CreatePollActivity extends AppCompatActivity {
         String option2 = etOption2.getText().toString().trim();
 
         if (title.isEmpty()) {
-            etTitle.setError("El título es requerido");
-            /*solicita que ese componente reciba el foco de entrada del usuario, abre el teclado*/
+            etTitle.setError(getString(R.string.create_poll_title_required));
             etTitle.requestFocus();
             return false;
         }
 
         if (question.isEmpty()) {
-            etQuestion.setError("La pregunta es requerida");
+            etQuestion.setError(getString(R.string.create_poll_question_required));
             etQuestion.requestFocus();
             return false;
         }
 
         if (option1.isEmpty()) {
-            etOption1.setError("La opción 1 es requerida");
+            etOption1.setError(getString(R.string.create_poll_option1_required));
             etOption1.requestFocus();
             return false;
         }
 
         if (option2.isEmpty()) {
-            etOption2.setError("La opción 2 es requerida");
+            etOption2.setError(getString(R.string.create_poll_option2_required));
             etOption2.requestFocus();
             return false;
         }
@@ -120,12 +119,12 @@ public class CreatePollActivity extends AppCompatActivity {
         boolean isAnonymous = cbAnonymous.isChecked();
 
         StringBuilder resumen = new StringBuilder();
-        resumen.append("📋 Título: ").append(title).append("\n\n");
+        resumen.append("📋 ").append(getString(R.string.create_poll_title_hint)).append(": ").append(title).append("\n\n");
         if (!description.isEmpty()) {
-            resumen.append("📝 Descripción: ").append(description).append("\n\n");
+            resumen.append("📝 ").append(getString(R.string.create_poll_description_hint)).append(": ").append(description).append("\n\n");
         }
-        resumen.append("❓ Pregunta: ").append(question).append("\n\n");
-        resumen.append("📌 Opciones:\n");
+        resumen.append("❓ ").append(getString(R.string.create_poll_question_hint)).append(": ").append(question).append("\n\n");
+        resumen.append(getString(R.string.poll_options)).append(":\n");
         resumen.append("   1. ").append(option1).append("\n");
         resumen.append("   2. ").append(option2).append("\n");
         if (!option3.isEmpty()) {
@@ -134,23 +133,23 @@ public class CreatePollActivity extends AppCompatActivity {
         if (!option4.isEmpty()) {
             resumen.append("   4. ").append(option4).append("\n");
         }
-        resumen.append("\n🔒 Anónima: ").append(isAnonymous ? "Sí" : "No");
+        resumen.append("\n🔒 ").append(getString(R.string.create_poll_anonymous)).append(": ").append(isAnonymous ? getString(R.string.yes) : getString(R.string.no));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmar creación de encuesta")
+        builder.setTitle(R.string.create_poll_title)
                 .setMessage(resumen.toString())
                 .setIcon(android.R.drawable.ic_dialog_info)
-                .setPositiveButton("Crear Encuesta", (dialog, which) -> crearEncuesta())
-                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
-                .setNeutralButton("Editar", (dialog, which) -> {
-                    Toast.makeText(this, "Puedes editar los campos", Toast.LENGTH_SHORT).show();
+                .setPositiveButton(R.string.create_poll_button, (dialog, which) -> crearEncuesta())
+                .setNegativeButton(R.string.dialog_cancel, (dialog, which) -> dialog.dismiss())
+                .setNeutralButton(R.string.poll_edit_fields_button, (dialog, which) -> {
+                    Toast.makeText(this, R.string.poll_edit_fields, Toast.LENGTH_SHORT).show();
                 });
         builder.show();
     }
 
     private void crearEncuesta() {
         btnCreatePoll.setEnabled(false);
-        btnCreatePoll.setText("Creando...");
+        btnCreatePoll.setText(R.string.poll_creating);
 
         String title = etTitle.getText().toString().trim();
         String description = etDescription.getText().toString().trim();
@@ -159,7 +158,7 @@ public class CreatePollActivity extends AppCompatActivity {
         String option2 = etOption2.getText().toString().trim();
         String option3 = etOption3.getText().toString().trim();
         String option4 = etOption4.getText().toString().trim();
-        boolean isAnonymous = cbAnonymous.isChecked();//no sirve para nada ahora mismo (a checkear 💅)
+        boolean isAnonymous = cbAnonymous.isChecked();
 
         if (option3.isEmpty()) option3 = null;
         if (option4.isEmpty()) option4 = null;
@@ -181,28 +180,26 @@ public class CreatePollActivity extends AppCompatActivity {
 
             runOnUiThread(() -> {
                 btnCreatePoll.setEnabled(true);
-                btnCreatePoll.setText("Crear Encuesta");
+                btnCreatePoll.setText(R.string.create_poll_button);
 
                 if (exito) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreatePollActivity.this);
-                    builder.setTitle("¡Encuesta creada!")
-                            .setMessage("Tu encuesta ha sido publicada exitosamente.")
+                    builder.setTitle(R.string.poll_create_success_title)
+                            .setMessage(R.string.poll_create_success_message)
                             .setIcon(android.R.drawable.ic_dialog_info)
-                            .setPositiveButton("Ver encuestas", (dialog, which) -> {
-
+                            .setPositiveButton(R.string.poll_create_success_button, (dialog, which) -> {
                                 finish();
                             })
-                            .setNeutralButton("Crear otra", (dialog, which) -> {
-
+                            .setNeutralButton(R.string.poll_create_another_button, (dialog, which) -> {
                                 limpiarFormulario();
                             });
                     builder.show();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreatePollActivity.this);
-                    builder.setTitle("Error")
-                            .setMessage("No se pudo crear la encuesta. Por favor, inténtalo de nuevo.")
+                    builder.setTitle(R.string.poll_create_error_title)
+                            .setMessage(R.string.poll_create_error_message)
                             .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton("Aceptar", null);
+                            .setPositiveButton(R.string.dialog_ok, null);
                     builder.show();
                 }
             });

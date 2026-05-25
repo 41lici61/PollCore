@@ -52,13 +52,13 @@ public class PollDetailActivity extends AppCompatActivity {
         userId = intent.getIntExtra("user_id", -1);
 
         if (pollId == -1) {
-            Toast.makeText(this, "Error: Poll not identified", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_poll_not_identified, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
         if (userId == -1) {
-            Toast.makeText(this, "Error: User not identified", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_user_not_identified, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -89,7 +89,7 @@ public class PollDetailActivity extends AppCompatActivity {
         currentPoll = pollDAO.getById(pollId);
 
         if (currentPoll == null) {
-            Toast.makeText(this, "Error loading poll", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_loading_poll, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -104,7 +104,7 @@ public class PollDetailActivity extends AppCompatActivity {
         }
 
         tvPollQuestion.setText(currentPoll.getQuestion());
-        tvVotesInfo.setText(currentPoll.getTotalVotes() + " total votes");
+        tvVotesInfo.setText(currentPoll.getTotalVotes() + " " + getString(R.string.poll_total_votes_label));
 
         rbOption1.setText(currentPoll.getOption1());
         rbOption2.setText(currentPoll.getOption2());
@@ -128,7 +128,7 @@ public class PollDetailActivity extends AppCompatActivity {
         int selectedId = rgOptions.getCheckedRadioButtonId();
 
         if (selectedId == -1) {
-            Toast.makeText(this, "Please select an option", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.poll_select_option, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -146,13 +146,13 @@ public class PollDetailActivity extends AppCompatActivity {
         final int option = selectedOption;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirm Vote")
-                .setMessage("Are you sure you want to vote for this option?\n\n" +
-                        "Selected option: " + getOptionText(option))
-                .setPositiveButton("Confirm", (dialog, which) -> {
+        builder.setTitle(R.string.confirm_vote_title)
+                .setMessage(getString(R.string.confirm_vote_message) + "\n\n" +
+                        getString(R.string.selected_option_label) + " " + getOptionText(option))
+                .setPositiveButton(R.string.dialog_confirm, (dialog, which) -> {
                     registerVote(option);
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(R.string.dialog_cancel, null)
                 .show();
     }
 
@@ -176,7 +176,7 @@ public class PollDetailActivity extends AppCompatActivity {
                 btnAccept.setEnabled(true);
 
                 if (success) {
-                    Toast.makeText(PollDetailActivity.this, "Vote registered successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PollDetailActivity.this, R.string.poll_vote_success, Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(PollDetailActivity.this, Comments.class);
                     intent.putExtra("poll_id", pollId);
@@ -186,9 +186,9 @@ public class PollDetailActivity extends AppCompatActivity {
                     finish();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(PollDetailActivity.this);
-                    builder.setTitle("Error")
-                            .setMessage("You have already voted on this poll or an error occurred.")
-                            .setPositiveButton("OK", (dialog, which) -> {
+                    builder.setTitle(R.string.error)
+                            .setMessage(R.string.poll_already_voted)
+                            .setPositiveButton(R.string.dialog_ok, (dialog, which) -> {
                                 Intent intent = new Intent(PollDetailActivity.this, Comments.class);
                                 intent.putExtra("poll_id", pollId);
                                 intent.putExtra("user_id", userId);
