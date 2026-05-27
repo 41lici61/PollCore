@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.pollcore.R;
 import com.example.pollcore.dao.UserDAO;
 import com.example.pollcore.models.User;
+import com.example.pollcore.security.SecurityUtils;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -32,6 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
     private String newUsername = null;
     private String newEmail = null;
     private String newPassword = null;
+    private String newPasswordPlain = null;
     private Boolean newIsPrivate = null;
 
     @Override
@@ -181,7 +183,9 @@ public class SettingsActivity extends AppCompatActivity {
             } else if (!nuevaPass.equals(confirmPass)) {
                 Toast.makeText(this, R.string.error_password_mismatch, Toast.LENGTH_SHORT).show();
             } else {
-                newPassword = nuevaPass;
+                // ✅ Aplicar hash SHA-256 a la nueva contraseña
+                newPassword = SecurityUtils.hashPasswordSimple(nuevaPass);
+                newPasswordPlain = nuevaPass; // Guardamos temporalmente para el resumen
                 tvCurrentPassword.setText("******** (" + getString(R.string.pending) + ")");
                 Toast.makeText(this, R.string.password_pending, Toast.LENGTH_SHORT).show();
             }
@@ -223,7 +227,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void guardarCambios() {
         if (newUsername != null) currentUser.setUsername(newUsername);
         if (newEmail != null) currentUser.setEmail(newEmail);
-        if (newPassword != null) currentUser.setPasswordHash(newPassword);
+        if (newPassword != null) currentUser.setPasswordHash(newPassword);  // Guarda el hash
         currentUser.setPrivate(swPrivateProfile.isChecked());
 
         boolean exito = userDAO.updateUser(currentUser);
@@ -234,6 +238,7 @@ public class SettingsActivity extends AppCompatActivity {
             newUsername = null;
             newEmail = null;
             newPassword = null;
+            newPasswordPlain = null;
 
             tvCurrentUsername.setText(currentUser.getUsername());
             tvCurrentEmail.setText(currentUser.getEmail());

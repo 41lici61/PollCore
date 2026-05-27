@@ -21,37 +21,40 @@ public class UserDAO {
     }
 
     // LOGIN
-    public User login(String email, String passwordHash) {
 
-        String sql = "SELECT * FROM pollcore.users WHERE email=? AND password_hash=?";
+    public User login(String email, String password) {
+        String sql = "SELECT * FROM pollcore.users WHERE email=?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, email);
-            ps.setString(2, passwordHash);
-
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                // Obtener el hash
+                String storedHash = rs.getString("password_hash");
 
-                Array arr = rs.getArray("answered_polls");
-                Integer[] answered = arr != null ? (Integer[]) arr.getArray() : new Integer[]{};
+                // Generar hash
+                String hashedInput = com.example.pollcore.security.SecurityUtils.hashPasswordSimple(password);
 
-                return new User(
-                        rs.getInt("id_user"),
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("password_hash"),
-                        rs.getBoolean("is_private"),
-                        answered,
-                        rs.getTimestamp("created_at")
-                );
+                // Comparar hashes
+                if (storedHash.equals(hashedInput)) {
+                    Array arr = rs.getArray("answered_polls");
+                    Integer[] answered = arr != null ? (Integer[]) arr.getArray() : new Integer[]{};
+
+                    return new User(
+                            rs.getInt("id_user"),
+                            rs.getString("username"),
+                            rs.getString("email"),
+                            storedHash,
+                            rs.getBoolean("is_private"),
+                            answered,
+                            rs.getTimestamp("created_at")
+                    );
+                }
             }
-
         } catch (Exception e) {
             Log.e("SQL", "login error", e);
         }
-
         return null;
     }
     public boolean deleteUser(int userId) {
@@ -83,18 +86,19 @@ public class UserDAO {
     }
 
     // REGISTER
-    public boolean register(User u) {
 
+    public boolean register(User u) {
         String sql = "INSERT INTO pollcore.users (username, email, password_hash, is_private) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, u.getUsername());
             ps.setString(2, u.getEmail());
-            ps.setString(3, u.getPasswordHash());
-            ps.setBoolean(4, u.isPrivate());
-            //created_at tiene DEFAULT CURRENT_TIMESTAMP y NO se mete desde Java, lo hace PostgreSQL automáticamente
 
+            // Hash de la contraseña antes de guardarla
+            String hashedPassword = com.example.pollcore.security.SecurityUtils.hashPasswordSimple(u.getPasswordHash());
+            ps.setString(3, hashedPassword);  // Guarda el hash, no la contraseña
+
+            ps.setBoolean(4, u.isPrivate());
             ps.executeUpdate();
             return true;
 
