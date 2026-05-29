@@ -6,6 +6,7 @@ import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,8 +36,14 @@ public class ActivityRegister extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         swPrivateAccount = findViewById(R.id.swPrivateAccount);
         btnRegister = findViewById(R.id.btnRegister);
-
+        TextView tvLoginLink = findViewById(R.id.tvLoginLink);
         btnRegister.setOnClickListener(v -> registrarUsuario());
+
+        tvLoginLink.setOnClickListener(v -> {
+            Intent intent = new Intent(ActivityRegister.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private boolean isValidEmail(String email) {
